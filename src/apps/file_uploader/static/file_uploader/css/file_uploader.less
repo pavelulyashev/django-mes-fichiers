@@ -1,0 +1,142 @@
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+@form-height: 140px;
+@form-width: 450px;
+@image-width: 130px;
+@image-height: 100px;
+
+.instance-form {
+  float: left;
+  margin: 0 30px 40px 0;
+  width: @form-width;
+
+  .cover {
+    float: left;
+    margin: 0 20px 0 0;
+    width: @image-width;
+
+    .image {
+      font-size: 0;
+      width: @image-width;
+      height: @image-height;
+//      border: 1px solid transparent;
+      overflow: hidden;
+      display: table-cell;
+      vertical-align: top;
+      text-align: center;
+
+      img {
+        width: auto;
+        height: auto;
+        max-width: @image-width;
+        max-height: @image-height;
+      }
+    }
+
+  }
+
+
+  .text {
+    float: left;
+    width: @form-width - @image-width - 20px;
+
+    textarea {
+      height: 66px;
+    }
+
+    input[type="text"], textarea {
+      border-radius: 0;
+      box-sizing: border-box;
+      padding: 2px 4px;
+      width: 100%;
+    }
+
+    .btn-link {
+      font-size: 12px;
+      padding: 5px 0;
+    }
+
+    button {
+      margin: 0;
+    }
+  }
+}
+
+.drop-files-area {
+  background: #efefef;
+  border: 1px dashed #ccc;
+  float: left;
+  height: @form-height;
+  overflow: hidden;
+  position: relative;
+  width: @form-width;
+
+  input[type="file"] {
+    border: solid transparent;
+    border-width: 0 0 @form-height @form-width;
+    cursor: pointer;
+    direction: ltr;
+    filter: alpha(opacity=0);
+    margin: 0;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    -moz-transform: translate(-300px, 0) scale(4);
+    -o-transform: translate(250px, -50px) scale(1);
+  }
+
+  .hint {
+    color: #666;
+    margin: 50px 0 0 100px;
+
+    i {
+      margin-right: 10px;
+    }
+    div {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.album-thumbnail {
+  @album-th-width: 300px;
+  @album-th-height: 250px;
+  @album-th-margin: 40px;
+
+  display: block;
+  float: left;
+  height: @album-th-height;
+  margin: 0 @album-th-margin @album-th-margin 0;
+  width: @album-th-width;
+  overflow: hidden;
+  position: relative;
+
+  .album-title {
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    margin: 0 0 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: @album-th-width - 30px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  img {
+    width: @album-th-width;
+    vertical-align: top;
+  }
+
+  &:hover {
+    text-decoration: none;
+  }
+}

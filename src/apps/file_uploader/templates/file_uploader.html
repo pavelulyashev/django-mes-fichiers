@@ -1,0 +1,42 @@
+{% load static %}
+
+<html>
+<head>
+    <link rel="stylesheet" href="{% static "file_uploader/css/bootstrap.min.css" %}"/>
+    <link rel="stylesheet/less" href="{% static "file_uploader/css/file_uploader.less" %}"/>
+    <script type="text/javascript" src="{% static "file_uploader/js/less-1.3.3.min.js" %}"></script>
+</head>
+
+<body ng-app="ngUploaderView">
+    <header>&nbsp;</header>
+    <div class="container">
+        <div ng-controller="UploaderController">
+            {% verbatim %}
+            <div class="row">
+                <div class="span2 sidebar">
+                    <ul class="nav nav-tabs nav-stacked">
+                        <li ng-class="{active: !activeAlbum}"><a ng-href="/file_uploader/">All Albums</a></li>
+                        <li ng-repeat="album in albums" ng-class="{active: activeAlbum == album.id}">
+                            <a ng-href="/file_uploader/album/{{ album.id }}">{{ album.title }} ({{ album.images.length }})</a>
+                        </li>
+                        <li ng-class="{active: activeAlbum == 'new'}"><a ng-href="/file_uploader/album/">Create New Album</a></li>
+                    </ul>
+                </div>
+
+                <div class="span10 content" ng-view></div>
+            </div>
+            {% endverbatim %}
+
+        </div>
+    </div>
+    <footer></footer>
+
+    {% block angular %}
+        {% include "includes/albums.html" %}
+        {% include "includes/album.html" %}
+
+        <script type="text/javascript" src="{% static "file_uploader/js/angular.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/UploaderController.js" %}"></script>
+    {% endblock %}
+</body>
+</html>

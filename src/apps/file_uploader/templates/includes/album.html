@@ -1,0 +1,86 @@
+{% verbatim %}
+    <script type="text/ng-template" id="/album.html">
+        <div class="clearfix">
+            <form class="instance-form album-form clearfix" method="post">
+                <fieldset class="cover pull-left">
+                    <div class="image">
+                        <img ng-src="{{ album.cover }}" alt="{{ album.title }}">
+                    </div>
+                </fieldset>
+
+                <fieldset class="text pull-left">
+                    <div class="custom-control-group">
+                        <div class="controls">
+                            <input type="text" value="{{ album.title }}" placeholder="Name">
+                        </div>
+                    </div>
+                    <div class="custom-control-group">
+                        <div class="controls">
+                            <textarea value="{{ album.description }}" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="controls clearfix">
+                        <div class="pull-left dropdown">
+                            <a href="#" class="remove-album-with-files btn btn-link">Remove album</a>
+                            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" class="remove-album-only">Remove album without files</a></li>
+                            </ul>
+                        </div>
+
+                        <button type="submit" class="btn btn-link pull-right">Save</button>
+                    </div>
+                </fieldset>
+            </form>
+
+            <div class="drop-files-area">
+                <input type="file" name="file" multiple>
+
+                <div class="hint">
+                    <div><i class="icon-folder-open"></i>Click to add files</div>
+                    <div><i class="icon-move"></i>Or drag and drop new files here</div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="images thumbnails">
+            <li ng-repeat="image in album.images">
+                <a class="thumbnail" ng-click="editing = !editing">
+                    <img ng-src="{{ image.thumbnail }}" alt="{{ image.title }}" width="200" height="200">
+                </a>
+
+                <form class="instance-form file-form clearfix" method="post" ng-show="editing">
+                    <fieldset class="text pull-left">
+                        <div class="custom-control-group">
+                            <div class="controls">
+                                <input type="text" value="{{ image.title }}" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="custom-control-group">
+                            <div class="controls">
+                                <textarea value="{{ image.description }}" placeholder="Description"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="controls clearfix">
+                            <div class="pull-left dropdown">
+                                <a href class="remove-file btn btn-link">Remove File</a>
+                                <a href class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href>Remove file only from album</a></li>
+                                </ul>
+                            </div>
+
+                            <button type="submit" class="btn btn-link pull-right">Save</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </li>
+        </ul>
+    </script>
+{% endverbatim %}

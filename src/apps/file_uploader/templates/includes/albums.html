@@ -1,0 +1,15 @@
+{% verbatim %}
+    <script type="text/ng-template" id="/albums.html">
+        <ul class="albums">
+            <li class="album" ng-repeat="album in albums">
+                <div ng-init="editing = false">
+                    <a href class="album-thumbnail" ng-href="/file_uploader/album/{{ album.id }}">
+                        <div class="album-title pull-left" title="{{ album.title }}">{{ album.title }}</div>
+                        <div class="pull-right label">{{ album.images.length }}</div>
+                        <img ng-src="{{ album.cover }}">
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </script>
+{% endverbatim %}

@@ -33,3 +33,9 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+*local.py
+.idea
+media/
+static/
+!src/apps/*/static/
