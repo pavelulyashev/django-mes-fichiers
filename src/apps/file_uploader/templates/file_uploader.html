@@ -11,22 +11,12 @@
     <header>&nbsp;</header>
     <div class="container">
         <div ng-controller="UploaderController">
-            {% verbatim %}
-            <div class="row">
-                <div class="span2 sidebar">
-                    <ul class="nav nav-tabs nav-stacked">
-                        <li ng-class="{active: !activeAlbum}"><a ng-href="/file_uploader/">All Albums</a></li>
-                        <li ng-repeat="album in albums" ng-class="{active: activeAlbum == album.id}">
-                            <a ng-href="/file_uploader/album/{{ album.id }}">{{ album.title }} ({{ album.images.length }})</a>
-                        </li>
-                        <li ng-class="{active: activeAlbum == 'new'}"><a ng-href="/file_uploader/album/">Create New Album</a></li>
-                    </ul>
-                </div>
+            {% csrf_token %}
 
+            <div class="row">
+                <div class="span2 sidebar" ng-include src="'menu.html'"></div>
                 <div class="span10 content" ng-view></div>
             </div>
-            {% endverbatim %}
-
         </div>
     </div>
     <footer></footer>
@@ -34,6 +24,7 @@
     {% block angular %}
         {% include "includes/albums.html" %}
         {% include "includes/album.html" %}
+        {% include "includes/navigation.html" %}
 
         <script type="text/javascript" src="{% static "file_uploader/js/angular.min.js" %}"></script>
         <script type="text/javascript" src="{% static "file_uploader/js/angular-resource.min.js" %}"></script>

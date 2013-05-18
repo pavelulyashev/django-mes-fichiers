@@ -1,34 +1,28 @@
 {% verbatim %}
     <script type="text/ng-template" id="/album.html">
         <div class="clearfix">
-            <form class="instance-form album-form clearfix" method="post">
+            <form class="instance-form album-form clearfix" name="albumForm" ng-submit="saveAlbum()">
                 <fieldset class="cover pull-left">
                     <div class="image">
-                        <img ng-src="{{ album.cover }}" alt="{{ album.title }}">
+                        <img ng-src="{{ album.cover.thumbnail_small }}" alt="{{ album.title }}">
                     </div>
                 </fieldset>
 
                 <fieldset class="text pull-left">
                     <div class="custom-control-group">
                         <div class="controls">
-                            <input type="text" value="{{ album.title }}" placeholder="Name">
+                            <input type="text" ng-model="album.name" value="{{ album.name }}" placeholder="Album name">
                         </div>
                     </div>
                     <div class="custom-control-group">
                         <div class="controls">
-                            <textarea value="{{ album.description }}" placeholder="Description"></textarea>
+                            <textarea ng-model="album.description" value="{{ album.description }}" placeholder="Album description"></textarea>
                         </div>
                     </div>
 
                     <div class="controls clearfix">
-                        <div class="pull-left dropdown">
-                            <a href="#" class="remove-album-with-files btn btn-link">Remove album</a>
-                            <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" class="remove-album-only">Remove album without files</a></li>
-                            </ul>
+                        <div class="pull-left">
+                            <a href class="remove-album-with-files btn btn-link">Remove album</a>
                         </div>
 
                         <button type="submit" class="btn btn-link pull-right">Save</button>
@@ -66,14 +60,8 @@
                         </div>
 
                         <div class="controls clearfix">
-                            <div class="pull-left dropdown">
+                            <div class="pull-left">
                                 <a href class="remove-file btn btn-link">Remove File</a>
-                                <a href class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href>Remove file only from album</a></li>
-                                </ul>
                             </div>
 
                             <button type="submit" class="btn btn-link pull-right">Save</button>

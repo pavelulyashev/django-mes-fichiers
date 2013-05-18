@@ -12,12 +12,16 @@ App.config([
 
         $routeProvider.when('/file_uploader/album/', {
             templateUrl: '/album.html',
-            controller: NewAlbumController
+            controller: 'NewAlbumController'
         });
 
         $routeProvider.when('/file_uploader/album/:albumId', {
             templateUrl: '/album.html',
             controller: AlbumController
+        });
+
+        $routeProvider.otherwise({
+            redirectTo: '/file_uploader/'
         });
 
         $locationProvider.html5Mode(true);
@@ -66,73 +70,96 @@ function AlbumsController($rootScope) {
 
 function AlbumController($scope, $routeParams, $rootScope) {
     var id = $rootScope.activeAlbum = $routeParams.albumId;
-    $scope.album = $scope.$parent.albums[id];
+    $scope.album = $rootScope.albums[id];
 }
 
-function NewAlbumController($scope, $rootScope) {
-    $rootScope.activeAlbum = 'new';
-}
+App.controller('NewAlbumController', [
+    '$scope', '$rootScope', '$location', 'MonAlbum',
+    function NewAlbumController($scope, $rootScope, $location, MonAlbum) {
+        $rootScope.activeAlbum = 'new';
+
+        $scope.album = new MonAlbum();
+        $scope.saveAlbum = function() {
+            if (this.albumForm.$valid) {
+                this.album.$create(function(newAlbum) {
+                    $rootScope.albums[newAlbum.id] = newAlbum;
+                    $location.url('/file_uploader/album/' + newAlbum.id);
+                }, function(err) {
+                    console.log(err);
+                })
+            }
+        };
+    }
+]);
 
 App.controller('UploaderController', [
-    '$scope', '$route', '$routeParams', '$location', 'MonAlbum',
-    function UploaderController($scope, $route, $routeParams, $location, MonAlbum) {
+    '$scope', '$rootScope', '$route', '$routeParams', '$location', 'MonAlbum',
+    function UploaderController($scope, $rootScope, $route,
+                                $routeParams, $location, MonAlbum) {
         window.MonAlbum = MonAlbum;
+        window.scope = $scope;
 
         $scope.$route = $route;
         $scope.$location = $location;
         $scope.$routeParams = $routeParams;
 
-        $scope.albums = {
+//        if (!$rootScope.albums) {
+//            MonAlbum.query(function(albums) {
+//                $scope.albums = $rootScope.albums = albums;
+//            });
+//        }
+
+        $scope.albums1 = {
             1: {
                 id: 1,
-                title: 'Les Oiseaux',
+                name: 'Les Oiseaux',
                 cover: 'http://img301.imageshack.us/img301/4472/blx8.jpg',
-                images: [
+                files: [
                     {
                         id: 1,
-                        title: 'L\'Oiseaux beauté',
+                        name: 'L\'Oiseaux beauté',
                         description: '',
                         thumbnail: 'http://cordis.europa.eu/news/images/20120301-2.jpg'
                     },
                     {
                         id: 2,
-                        title: 'Oiseau',
+                        name: 'Oiseau',
                         description: '',
                         thumbnail: 'http://photosergio.zenfolio.com/img/s8/v83/p1428423432-11.jpg'
                     },
                     {
                         id: 3,
-                        title: '',
+                        name: '',
                         description: '',
                         thumbnail: 'http://www.observatoire-estran-tranchais.fr/fiches-techniques/images/pipit-rousseline.jpg'
                     },
                     {
                         id: 4,
-                        title: '',
+                        name: '',
                         description: '',
                         thumbnail: 'https://www.lebelage.ca/sites/default/files/styles/medium/public/images/articles/observer-oiseaux.jpg?itok=l6nF8tfV'
                     },
                     {
                         id: 23,
-                        title: '',
+                        name: '',
                         description: '',
                         thumbnail: 'http://parcsaintecroix.com/wp-content/uploads/2013/03/shutterstock_58202509.jpg'
                     },
                     {
                         id: 89,
-                        title: '',
+                        name: '',
                         description: '',
                         thumbnail: 'http://ds4.ds.static.rtbf.be/article/square200/9/d/b/200_200_4c4c413ca85d4359888b78996c464957-1328256272.jpg'
                     },
                     {
                         id: 122,
-                        title: '',
+                        name: '',
                         description: '',
                         thumbnail: 'http://rds.relaisdsciences.org/img_clt/visuel_mnf_1336547023.jpg'
                     },
                     {
                         id: 7,
-                        title: '',
+                        name: '',
                         description: '',
                         thumbnail: 'http://cordis.europa.eu/news/images/20100906-2.jpg'
                     }
@@ -140,11 +167,11 @@ App.controller('UploaderController', [
             },
             2: {
                 id: 2,
-                title: 'Les Animaux',
+                name: 'Les Animaux',
                 cover: 'http://4.bp.blogspot.com/-9shlt1v0F_U/TZs-N72WMVI/AAAAAAAAAN8/_iyKyHsESqg/s1600/animaux2.jpg',
-                images: [
+                files: [
                     {
-                        title: 'L\'Ours',
+                        name: 'L\'Ours',
                         description: '',
                         thumbnail: 'http://stock.wikimini.org/w/images/c/cf/Ours_polaire.jpg'
                     }
