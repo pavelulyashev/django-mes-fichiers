@@ -2,6 +2,7 @@ from django.views.generic import TemplateView
 
 from rest_framework import viewsets
 from src.apps.file_uploader.models import MonAlbum, MonFile
+from src.apps.file_uploader.serializers import AlbumSerializer, FileSerializer
 
 
 class RootView(TemplateView):
@@ -10,9 +11,9 @@ class RootView(TemplateView):
 
 class AlbumViewSet(viewsets.ModelViewSet):
     queryset = MonAlbum.objects.all()
-    model = MonAlbum
+    serializer_class = AlbumSerializer
 
 
 class FileViewSet(viewsets.ModelViewSet):
     queryset = MonFile.objects.all()
-    model = MonFile
+    serializer_class = FileSerializer
