@@ -4,9 +4,11 @@ from src.apps.file_uploader import views
 
 
 class CustomRouter(DefaultRouter):
+    include_root_view = False
+
     def __init__(self):
         super(CustomRouter, self).__init__()
-        self.routes[0] = self.routes[0]._replace(url=r'^{prefix}/?$')
+        self.routes[0] = self.routes[0]._replace(url=r'^{prefix}/$')
 
 
 router = CustomRouter()
