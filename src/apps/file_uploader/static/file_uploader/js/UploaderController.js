@@ -24,6 +24,14 @@ App.config([
     }
 ]);
 
+App.config([
+    '$httpProvider',
+    function($httpProvider) {
+        var token = document.querySelector('input[name=csrfmiddlewaretoken]');
+        $httpProvider.defaults.headers.post['X-CSRFToken'] = token.value;
+    }
+]);
+
 App.factory('MonAlbum', [
     '$resource',
     function ($resource) {
