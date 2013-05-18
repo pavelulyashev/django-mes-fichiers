@@ -13,6 +13,12 @@ class MonFile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, help_text=u'Created')
     updated_at = models.DateTimeField(auto_now=True, help_text=u'Updated')
 
+    class Meta:
+        verbose_name_plural = 'Mes Files'
+
+    def __unicode__(self):
+        return self.name
+
 
 class MonAlbum(models.Model):
     name = models.CharField(max_length=250)
@@ -24,3 +30,9 @@ class MonAlbum(models.Model):
     files = models.ManyToManyField(MonFile,
                                    related_name='albums',
                                    blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Mes Albums'
+
+    def __unicode__(self):
+        return self.name
