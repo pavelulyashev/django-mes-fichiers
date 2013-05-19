@@ -8,7 +8,16 @@ class CustomRouter(DefaultRouter):
 
     def __init__(self):
         super(CustomRouter, self).__init__()
-        self.routes[0] = self.routes[0]._replace(url=r'^{prefix}/$')
+        routes = self.routes
+        routes[0] = routes[0]._replace(url=r'^{prefix}/?$')
+        routes[1] = routes[1]._replace(
+            url=r'^{prefix}/{lookup}/?$',
+            mapping={
+                'get': 'retrieve',
+                'put': 'partial_update',
+                'delete': 'destroy'
+            }
+        )
 
 
 router = CustomRouter()
@@ -17,6 +26,6 @@ router.register(r'files', views.FileViewSet)
 
 
 urlpatterns = patterns('',
-    url(r'^', include(router.urls)),
+    url(r'^rest/', include(router.urls)),
     url(r'^(?P<path>.*)$', views.RootView.as_view(), name='file_uploader_root'),
 )
