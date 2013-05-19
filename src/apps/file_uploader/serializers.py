@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, relations
 from src.apps.file_uploader.models import MonFile, MonAlbum
 
 
@@ -37,3 +37,6 @@ class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = MonAlbum
 
+
+class AlbumListSerializer(AlbumSerializer):
+    files = relations.PrimaryKeyRelatedField(many=True)
