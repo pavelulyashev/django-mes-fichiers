@@ -30,27 +30,29 @@
                 </fieldset>
             </form>
 
-            <div class="drop-files-area">
+            <form class="drop-files-area" data-fileupload="options">
                 <input type="file" name="file" multiple>
 
                 <div class="hint">
                     <div><i class="icon-folder-open"></i>Click to add files</div>
                     <div><i class="icon-move"></i>Or drag and drop new files here</div>
                 </div>
-            </div>
+            </form>
         </div>
 
         <ul class="images thumbnails">
-            <li ng-repeat="image in album.images">
+            <li ng-repeat="image in queue" class="span2">
                 <a class="thumbnail" ng-click="editing = !editing">
-                    <img ng-src="{{ image.thumbnail }}" alt="{{ image.title }}" width="200" height="200">
+                    <img ng-show="image.thumbnail" ng-src="{{ image.thumbnail }}" alt="{{ image.name }}" width="200" height="200">
+                    <div ng-hide="image.thumbnail" data-preview="image"></div>
                 </a>
+
 
                 <form class="instance-form file-form clearfix" method="post" ng-show="editing">
                     <fieldset class="text pull-left">
                         <div class="custom-control-group">
                             <div class="controls">
-                                <input type="text" value="{{ image.title }}" placeholder="Name">
+                                <input type="text" value="{{ image.name }}" placeholder="Name">
                             </div>
                         </div>
                         <div class="custom-control-group">

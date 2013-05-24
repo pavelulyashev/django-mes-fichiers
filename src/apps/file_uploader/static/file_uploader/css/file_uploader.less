@@ -13,6 +13,8 @@ ul, li {
   float: left;
   margin: 0 30px 40px 0;
   width: @form-width;
+  position: relative;
+  z-index: 100;
 
   .cover {
     float: left;
@@ -30,10 +32,8 @@ ul, li {
       text-align: center;
 
       img {
-        width: auto;
-        height: auto;
-        max-width: @image-width;
-        max-height: @image-height;
+        width: @image-width;
+        height: @image-height;
       }
     }
 

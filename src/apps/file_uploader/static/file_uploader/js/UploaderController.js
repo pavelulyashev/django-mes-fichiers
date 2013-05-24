@@ -1,6 +1,6 @@
 'use strict';
 
-var App = angular.module('ngUploaderView', ['ngResource']);
+var App = angular.module('ngUploaderView', ['ngResource', 'blueimp.fileupload']);
 
 App.factory('MonAlbum', [
     '$resource',
@@ -36,6 +36,20 @@ App.config([
         var headers = $httpProvider.defaults.headers;
         var token = document.querySelector('input[name=csrfmiddlewaretoken]');
         headers.post['X-CSRFToken'] = headers.put['X-CSRFToken'] = token.value;
+    }
+]);
+
+App.config([
+    '$httpProvider', 'fileUploadProvider',
+    function ($httpProvider, fileUploadProvider) {
+        angular.extend(fileUploadProvider.defaults, {
+            disableImageResize: true,
+            previewMaxWidth: 160,
+            previewMaxHeight: 160,
+            previewCrop: true,
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+        });
     }
 ]);
 
@@ -77,7 +91,8 @@ App
         $rootScope.albums = albums;
     }
 ])
-.service('retrieveAlbums',
+.service('retrieveAlbums', [
+    '$rootScope', '$q', 'MonAlbum',
     function($rootScope, $q, MonAlbum) {
         var albumsLoaded = $q.defer();
 
@@ -98,7 +113,7 @@ App
 
         return albumsLoaded.promise;
     }
-);
+]);
 
 App
 .controller('AlbumController', [
@@ -116,7 +131,8 @@ App
         };
     }
 ])
-.service('retrieveAlbum',
+.service('retrieveAlbum', [
+    '$q', '$route', 'MonAlbum',
     function($q, $route, MonAlbum) {
         var albumId = $route.current.params.albumId;
         var albumsLoaded = $q.defer();
@@ -125,7 +141,7 @@ App
         });
         return albumsLoaded.promise;
     }
-);
+]);
 
 App.controller('NewAlbumController', [
     '$scope', '$rootScope', '$location', 'MonAlbum',

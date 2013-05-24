@@ -4,7 +4,7 @@
 <head>
     <link rel="stylesheet" href="{% static "file_uploader/css/bootstrap.min.css" %}"/>
     <link rel="stylesheet/less" href="{% static "file_uploader/css/file_uploader.less" %}"/>
-    <script type="text/javascript" src="{% static "file_uploader/js/less-1.3.3.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "file_uploader/js/libs/less-1.3.3.min.js" %}"></script>
 </head>
 
 <body ng-app="ngUploaderView">
@@ -21,13 +21,27 @@
     </div>
     <footer></footer>
 
+    {% block scripts %}
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/jquery-1.9.1.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.ui.widget.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/load-image.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/canvas-to-blob.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.iframe-transport.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-process.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-resize.js" %}"></script>
+{#        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-validate.js" %}"></script>#}
+{#        <script type="text/javascript" src="{% static "" %}"></script>#}
+    {% endblock %}
+
     {% block angular %}
         {% include "includes/albums.html" %}
         {% include "includes/album.html" %}
         {% include "includes/navigation.html" %}
 
-        <script type="text/javascript" src="{% static "file_uploader/js/angular.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "file_uploader/js/angular-resource.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/angular.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/angular-resource.min.js" %}"></script>
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-angular.js" %}"></script>
         <script type="text/javascript" src="{% static "file_uploader/js/UploaderController.js" %}"></script>
     {% endblock %}
 </body>
