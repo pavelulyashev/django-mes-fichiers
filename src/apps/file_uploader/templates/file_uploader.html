@@ -14,8 +14,8 @@
             {% csrf_token %}
 
             <div class="row">
-                <div class="span2 sidebar" ng-include src="'menu.html'"></div>
-                <div class="span10 content" ng-view></div>
+                <div class="span3 sidebar" ng-include src="'menu.html'"></div>
+                <div class="span9 content" ng-view></div>
             </div>
         </div>
     </div>
@@ -30,7 +30,7 @@
         <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload.js" %}"></script>
         <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-process.js" %}"></script>
         <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-resize.js" %}"></script>
-{#        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-validate.js" %}"></script>#}
+        <script type="text/javascript" src="{% static "file_uploader/js/libs/fileupload/jquery.fileupload-validate.js" %}"></script>
 {#        <script type="text/javascript" src="{% static "" %}"></script>#}
     {% endblock %}
 
