@@ -1,3 +1,8 @@
+.border-box() {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
 ul, li {
   list-style-type: none;
   margin: 0;
@@ -6,18 +11,16 @@ ul, li {
 
 @form-height: 140px;
 @form-width: 450px;
-@image-width: 130px;
-@image-height: 100px;
+@image-width: 140px;
+@image-height: 140px;
 
 .instance-form {
-  float: left;
-  margin: 0 30px 40px 0;
-  width: @form-width;
+  display: table;
   position: relative;
   z-index: 100;
 
   .cover {
-    float: left;
+    display: table-cell;
     margin: 0 20px 0 0;
     width: @image-width;
 
@@ -25,7 +28,6 @@ ul, li {
       font-size: 0;
       width: @image-width;
       height: @image-height;
-//      border: 1px solid transparent;
       overflow: hidden;
       display: table-cell;
       vertical-align: top;
@@ -39,13 +41,12 @@ ul, li {
 
   }
 
-
   .text {
-    float: left;
-    width: @form-width - @image-width - 20px;
+    display: table-cell;
 
     textarea {
       height: 66px;
+      resize: vertical;
     }
 
     input[type="text"] {
@@ -53,8 +54,9 @@ ul, li {
     }
 
     input[type="text"], textarea {
+      .border-box();
+
       border-radius: 0;
-      box-sizing: border-box;
       padding: 2px 4px;
       width: 100%;
     }
@@ -71,13 +73,14 @@ ul, li {
 }
 
 .drop-files-area {
+  .border-box();
   background: #efefef;
   border: 1px dashed #ccc;
   float: left;
   height: @form-height;
   overflow: hidden;
   position: relative;
-  width: @form-width;
+  text-align: center;
 
   input[type="file"] {
     border: solid transparent;
@@ -96,7 +99,9 @@ ul, li {
 
   .hint {
     color: #666;
-    margin: 50px 0 0 100px;
+    display: inline-block;
+    margin: 45px 0;
+    text-align: left;
 
     i {
       margin-right: 10px;
@@ -134,6 +139,7 @@ ul, li {
     }
   }
 
+
   img {
     width: @album-th-width;
     vertical-align: top;
@@ -141,5 +147,49 @@ ul, li {
 
   &:hover {
     text-decoration: none;
+  }
+}
+
+.images {
+  @between-images: 20px;
+  margin-left: -1 * @between-images;
+
+  .image-item {
+    display: block;
+    float: left;
+    margin: 0 0 40px @between-images;
+
+    .image {
+      position: relative;
+      z-index: 200;
+    }
+
+    &.editing {
+      box-shadow: 0 0 15px 0 #ccc;
+      clear: both;
+      float: none;
+      padding: 15px;
+    }
+
+    .file-form {
+      display: block;
+      margin: 0;
+
+      .text {
+        float: left;
+        margin: 0 20px;
+        width: 50%;
+      }
+
+      .meta {
+        .full-image-link, .checkbox {
+          display: block;
+          margin-bottom: 12px;
+        }
+        .info {
+          font-size: 12px;
+        }
+      }
+    }
   }
 }

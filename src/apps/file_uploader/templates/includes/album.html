@@ -1,36 +1,29 @@
 {% verbatim %}
     <script type="text/ng-template" id="/album.html">
-        <div class="clearfix">
-            <form class="instance-form album-form clearfix" name="albumForm" ng-submit="saveAlbum()">
+        <div class="row">
+            <form class="instance-form album-form span5 clearfix" name="albumForm" ng-submit="saveAlbum()">
                 <fieldset class="cover pull-left">
                     <div class="image">
                         <img ng-src="{{ album.cover.thumbnail_small }}" alt="{{ album.title }}">
                     </div>
                 </fieldset>
 
-                <fieldset class="text pull-left">
-                    <div class="custom-control-group">
-                        <div class="controls">
-                            <input type="text" ng-model="album.name" value="{{ album.name }}" placeholder="Album name">
-                        </div>
+                <fieldset class="text">
+                    <div class="controls">
+                        <input type="text" ng-model="album.name" value="{{ album.name }}" placeholder="Album name">
                     </div>
-                    <div class="custom-control-group">
-                        <div class="controls">
-                            <textarea ng-model="album.description" value="{{ album.description }}" placeholder="Album description"></textarea>
-                        </div>
+                    <div class="controls">
+                        <textarea ng-model="album.description" value="{{ album.description }}" placeholder="Album description"></textarea>
                     </div>
 
                     <div class="controls clearfix">
-                        <div class="pull-left">
-                            <a href class="remove-album-with-files btn btn-link">Remove album</a>
-                        </div>
-
+                        <a href class="remove-album-with-files btn btn-link pull-left">Remove album</a>
                         <button type="submit" class="btn btn-link pull-right">Save</button>
                     </div>
                 </fieldset>
             </form>
 
-            <form class="drop-files-area" data-fileupload="options">
+            <form class="drop-files-area span4" data-fileupload="options">
                 <input type="file" name="file" multiple>
 
                 <div class="hint">
@@ -40,34 +33,38 @@
             </form>
         </div>
 
-        <ul class="images thumbnails">
-            <li ng-repeat="image in queue" class="span2">
-                <a class="thumbnail" ng-click="editing = !editing">
+        <ul class="images">
+            <li ng-repeat="image in queue" class="image-item" ng-class="editing && 'editing clearfix'">
+                <a href class="image pull-left" ng-click="editing = !editing" title="Toggle edit form">
                     <img ng-show="image.thumbnail" ng-src="{{ image.thumbnail }}" alt="{{ image.name }}" width="200" height="200">
                     <div ng-hide="image.thumbnail" data-preview="image"></div>
                 </a>
 
-
                 <form class="instance-form file-form clearfix" method="post" ng-show="editing">
-                    <fieldset class="text pull-left">
-                        <div class="custom-control-group">
-                            <div class="controls">
-                                <input type="text" value="{{ image.name }}" placeholder="Name">
-                            </div>
+                    <fieldset class="text">
+                        <div class="controls">
+                            <input type="text" value="{{ image.name }}" placeholder="Name">
                         </div>
-                        <div class="custom-control-group">
-                            <div class="controls">
-                                <textarea value="{{ image.description }}" placeholder="Description"></textarea>
-                            </div>
+                        <div class="controls">
+                            <textarea value="{{ image.description }}" placeholder="Description"></textarea>
                         </div>
 
                         <div class="controls clearfix">
-                            <div class="pull-left">
-                                <a href class="remove-file btn btn-link">Remove File</a>
-                            </div>
-
+                            <a href class="remove-file btn btn-link pull-left">Remove File</a>
                             <button type="submit" class="btn btn-link pull-right">Save</button>
                         </div>
+                    </fieldset>
+
+                    <fieldset class="meta">
+                        <a class="full-image-link" ng-href="{{ image.url }}" target="_blank">Open full image</a>
+                        <div class="controls checkbox">
+                            <label><input type="checkbox">Set as album cover</label>
+                        </div>
+
+                        <ul class="info">
+                            <li class="size">Size: {{ image.size | formatFileSize }}</li>
+                            <li class="uploaded">Uploaded: {{ image.uploaded_at | date }}</li>
+                        </ul>
                     </fieldset>
                 </form>
             </li>

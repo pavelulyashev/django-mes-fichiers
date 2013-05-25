@@ -44,8 +44,8 @@ App.config([
     function ($httpProvider, fileUploadProvider) {
         angular.extend(fileUploadProvider.defaults, {
             disableImageResize: true,
-            previewMaxWidth: 160,
-            previewMaxHeight: 160,
+            previewMaxWidth: 158,
+            previewMaxHeight: 140,
             previewCrop: true,
             maxFileSize: 5000000,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
