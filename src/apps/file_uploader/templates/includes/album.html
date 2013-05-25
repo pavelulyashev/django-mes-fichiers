@@ -10,7 +10,7 @@
 
                 <fieldset class="text">
                     <div class="controls">
-                        <input type="text" ng-model="album.name" value="{{ album.name }}" placeholder="Album name">
+                        <input type="text" ng-model="album.name" value="{{ album.name }}" placeholder="Album name" required>
                     </div>
                     <div class="controls">
                         <textarea ng-model="album.description" value="{{ album.description }}" placeholder="Album description"></textarea>
@@ -23,7 +23,7 @@
                 </fieldset>
             </form>
 
-            <form class="drop-files-area span4" data-fileupload="options">
+            <form ng-show="album.id" class="drop-files-area span4" data-fileupload="options">
                 <input type="file" name="file" multiple>
 
                 <div class="hint">

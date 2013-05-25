@@ -30,6 +30,13 @@ App.factory('MonFile', [
     }
 ]);
 
+App.factory('AlbumCache', [
+    '$cacheFactory',
+    function($cacheFactory) {
+        return $cacheFactory('AlbumCache');
+    }
+]);
+
 App.config([
     '$httpProvider',
     function($httpProvider) {
@@ -72,7 +79,7 @@ App.config([
             templateUrl: '/album.html',
             controller: 'AlbumController',
             resolve: { albums: 'retrieveAlbums',
-                       album: 'retrieveAlbum' }
+                       album: retrieveAlbum }
         });
 
         $routeProvider.otherwise({
@@ -119,16 +126,20 @@ App
 .controller('AlbumController', [
     '$scope', '$rootScope', 'albums', 'album',
     function AlbumController($scope, $rootScope, albums, album) {
-        $scope.album = album;
-        $rootScope.activeAlbum = album.id;
-
         $scope.saveAlbum = function() {
             if (this.albumForm.$valid) {
                 album.$save(function() {
                     albums[album.id] = album;
+                    setActiveAlbum(album);
                 });
             }
         };
+        setActiveAlbum(album);
+
+        function setActiveAlbum(album) {
+            $scope.album = album;
+            $rootScope.activeAlbum = album.id;
+        }
     }
 ])
 .service('retrieveAlbum', [
@@ -142,6 +153,23 @@ App
         return albumsLoaded.promise;
     }
 ]);
+
+function retrieveAlbum($q, $route, AlbumCache, MonAlbum) {
+    var albumId = $route.current.params.albumId;
+    var cachedAlbum = AlbumCache.get(albumId);
+
+    function getPromiseForAlbum() {
+        var albumLoaded = $q.defer();
+        MonAlbum.get({ id: albumId }, function(album) {
+            cachedAlbum = new MonAlbum(album);
+            AlbumCache.put(albumId, cachedAlbum);
+            albumLoaded.resolve(cachedAlbum);
+        });
+        return albumLoaded.promise;
+    }
+
+    return cachedAlbum || getPromiseForAlbum();
+}
 
 App.controller('NewAlbumController', [
     '$scope', '$rootScope', '$location', 'MonAlbum',
