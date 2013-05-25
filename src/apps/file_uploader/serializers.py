@@ -7,14 +7,21 @@ class FullUrlFileField(serializers.FileField):
         return value.url
 
 
-class ThumbnailImageField(serializers.ImageField):
+class ThumbnailFileField(serializers.FileField):
+
+    def __init__(self, alias=None, **kwargs):
+        self.alias = alias
+        super(ThumbnailFileField, self).__init__(**kwargs)
+
     def to_native(self, value):
-        return value.url
+        return value[self.alias].url
 
 
 class FileSerializer(serializers.ModelSerializer):
     url = FullUrlFileField(source='file', read_only=True)
-    thumbnail = ThumbnailImageField(source='file', read_only=True)
+    thumbnail = ThumbnailFileField(alias='preview',
+                                   source='file',
+                                   read_only=True)
 
     class Meta:
         model = MonFile
@@ -22,8 +29,12 @@ class FileSerializer(serializers.ModelSerializer):
 
 
 class AlbumCoverSerializer(serializers.ModelSerializer):
-    thumbnail_small = ThumbnailImageField(source='file', read_only=True)
-    thumbnail_medium = ThumbnailImageField(source='file', read_only=True)
+    thumbnail_small = ThumbnailFileField(alias='cover_small',
+                                         source='file',
+                                         read_only=True)
+    thumbnail_medium = ThumbnailFileField(alias='cover_medium',
+                                          source='file',
+                                          read_only=True)
 
     class Meta:
         model = MonFile

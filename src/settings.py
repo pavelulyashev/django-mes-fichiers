@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     'rest_framework',
+    'easy_thumbnails',
 
     'src.apps.file_uploader',
 )
