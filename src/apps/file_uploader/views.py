@@ -24,9 +24,16 @@ class FileViewSet(viewsets.ModelViewSet):
     serializer_class = FileSerializer
 
     def create(self, request, *args, **kwargs):
+        self.album_id = request.DATA.get('album')
         self.serializer_class = FileCreationSerializer
         return super(FileViewSet, self).create(request, *args, **kwargs)
 
     def pre_save(self, obj):
         super(FileViewSet, self).pre_save(obj)
         obj.name = obj.file.name
+
+    def post_save(self, obj, created=False):
+        super(FileViewSet, self).post_save(obj, created)
+        if created:
+            album = MonAlbum.objects.get(id=self.album_id)
+            album.files.add(self.object)

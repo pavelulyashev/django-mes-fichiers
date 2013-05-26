@@ -29,6 +29,7 @@
             <form enctype="multipart/form-data" action="/file_uploader/rest/files/" method="post"
                   ng-show="album.id" class="drop-files-area span4" data-fileupload="options">
                 <input type="file" name="file" multiple>
+                <input type="hidden" name="album" value="{{ album.id }}">
 
                 <div class="hint">
                     <div><i class="icon-folder-open"></i>Click to add files</div>
