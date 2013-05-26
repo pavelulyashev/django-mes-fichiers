@@ -17,15 +17,22 @@ class ThumbnailFileField(serializers.FileField):
         return value[self.alias].url
 
 
+class FileSizeField(serializers.FileField):
+    def to_native(self, value):
+        return value.size
+
+
 class FileSerializer(serializers.ModelSerializer):
     url = FullUrlFileField(source='file', read_only=True)
     thumbnail = ThumbnailFileField(alias='preview',
                                    source='file',
                                    read_only=True)
+    size = FileSizeField(source='file', read_only=True)
 
     class Meta:
         model = MonFile
-        fields = ('id', 'name', 'description', 'url', 'thumbnail')
+        fields = ('id', 'name', 'description', 'url',
+                  'thumbnail', 'size', 'created_at')
 
 
 class AlbumCoverSerializer(serializers.ModelSerializer):

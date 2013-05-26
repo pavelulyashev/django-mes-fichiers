@@ -63,7 +63,7 @@
 
                         <ul class="info">
                             <li class="size">Size: {{ image.size | formatFileSize }}</li>
-                            <li class="uploaded">Uploaded: {{ image.uploaded_at | date }}</li>
+                            <li class="uploaded">Uploaded: {{ image.created_at | date }}</li>
                         </ul>
                     </fieldset>
                 </form>
