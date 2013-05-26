@@ -49,7 +49,7 @@ def populate_aliases():
         _app_label: {
             'cover_medium': {'size': (270, 230), 'crop': True},
             'cover_small': {'size': (140, 140), 'crop': True},
-            'preview': {'size': (160, 160), 'crop': True},
+            'preview': {'size': (158, 140), 'crop': True},
         }
     }
     for target, target_aliases in THUMBNAIL_ALIASES.iteritems():

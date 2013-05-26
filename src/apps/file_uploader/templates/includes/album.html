@@ -34,7 +34,7 @@
         </div>
 
         <ul class="images">
-            <li ng-repeat="image in queue" class="image-item" ng-class="editing && 'editing clearfix'">
+            <li ng-repeat="image in queue.concat(album.files)" class="image-item" ng-class="editing && 'editing clearfix'">
                 <a href class="image pull-left" ng-click="editing = !editing" title="Toggle edit form">
                     <img ng-show="image.thumbnail" ng-src="{{ image.thumbnail }}" alt="{{ image.name }}" width="200" height="200">
                     <div ng-hide="image.thumbnail" data-preview="image"></div>
