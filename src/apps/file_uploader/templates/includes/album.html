@@ -16,14 +16,18 @@
                         <textarea ng-model="album.description" value="{{ album.description }}" placeholder="Album description"></textarea>
                     </div>
 
-                    <div class="controls clearfix">
+                    <div class="controls clearfix" ng-show="album.id">
                         <a href class="remove-album-with-files btn btn-link pull-left">Remove album</a>
                         <button type="submit" class="btn btn-link pull-right">Save</button>
+                    </div>
+                    <div class="controls clearfix" ng-hide="album.id">
+                        <button type="submit" class="btn btn-link pull-right">Create album</button>
                     </div>
                 </fieldset>
             </form>
 
-            <form ng-show="album.id" class="drop-files-area span4" data-fileupload="options">
+            <form enctype="multipart/form-data" action="/file_uploader/rest/files/" method="post"
+                  ng-show="album.id" class="drop-files-area span4" data-fileupload="options">
                 <input type="file" name="file" multiple>
 
                 <div class="hint">
@@ -34,7 +38,7 @@
         </div>
 
         <ul class="images">
-            <li ng-repeat="image in queue.concat(album.files)" class="image-item" ng-class="editing && 'editing clearfix'">
+            <li ng-repeat="image in album.files.concat(queue)" class="image-item" ng-class="editing && 'editing clearfix'">
                 <a href class="image pull-left" ng-click="editing = !editing" title="Toggle edit form">
                     <img ng-show="image.thumbnail" ng-src="{{ image.thumbnail }}" alt="{{ image.name }}" width="200" height="200">
                     <div ng-hide="image.thumbnail" data-preview="image"></div>

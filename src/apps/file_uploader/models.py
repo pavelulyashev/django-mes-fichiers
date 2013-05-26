@@ -1,15 +1,15 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from easy_thumbnails.fields import ThumbnailerImageField, ThumbnailerField
+from easy_thumbnails.fields import ThumbnailerField
 from easy_thumbnails.alias import aliases
 
 
 class MonFile(models.Model):
-    name = models.CharField(max_length=100, null=True, blank=True)
+    name = models.CharField(max_length=100, blank=True)
     file = ThumbnailerField(max_length=100, upload_to='monfile/%Y-%m-%d')
 
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(blank=True)
     user = models.ForeignKey(User, default=1, related_name='user_files')
 
     # automatic fields

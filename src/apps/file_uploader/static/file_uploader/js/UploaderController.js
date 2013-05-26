@@ -42,7 +42,11 @@ App.config([
     function($httpProvider) {
         var headers = $httpProvider.defaults.headers;
         var token = document.querySelector('input[name=csrfmiddlewaretoken]');
+
         headers.post['X-CSRFToken'] = headers.put['X-CSRFToken'] = token.value;
+        $.ajaxSetup({
+            headers: { 'X-CSRFToken': token.value }
+        });
     }
 ]);
 
@@ -55,7 +59,8 @@ App.config([
             previewMaxHeight: 140,
             previewCrop: true,
             maxFileSize: 5000000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            autoUpload: true
         });
     }
 ]);

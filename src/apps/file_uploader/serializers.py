@@ -1,3 +1,4 @@
+from easy_thumbnails.exceptions import InvalidImageFormatError
 from rest_framework import serializers, relations
 from src.apps.file_uploader.models import MonFile, MonAlbum
 
@@ -14,7 +15,10 @@ class ThumbnailFileField(serializers.FileField):
         super(ThumbnailFileField, self).__init__(**kwargs)
 
     def to_native(self, value):
-        return value[self.alias].url
+        try:
+            return value[self.alias].url
+        except InvalidImageFormatError:
+            return value.url
 
 
 class FileSizeField(serializers.FileField):
@@ -33,6 +37,14 @@ class FileSerializer(serializers.ModelSerializer):
         model = MonFile
         fields = ('id', 'name', 'description', 'url',
                   'thumbnail', 'size', 'created_at')
+
+
+class FileCreationSerializer(serializers.ModelSerializer):
+    file = serializers.FileField()
+
+    class Meta:
+        model = MonFile
+        fields = ('id', 'file', 'name', 'description', 'created_at')
 
 
 class AlbumCoverSerializer(serializers.ModelSerializer):
