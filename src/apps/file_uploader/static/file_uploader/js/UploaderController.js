@@ -204,18 +204,20 @@ App.controller('FileController', [
 
         $scope.saveFile = function() {
             if (this.fileForm.$valid) {
-                new MonFile(file).$save(function (updatedFile) {
-//                    angular.extend(file, updatedFile);
-                });
+                new MonFile(file).$save();
             }
         };
 
         $scope.removeFile = function() {
             if (confirm('Are you sure you want to remove this file?')) {
-                $scope.file.$destroy(function() {
-                    // remove file from album files
-                });
+                new MonFile($scope.file).$destroy(removeFileFromAlbum);
             }
         };
+
+        function removeFileFromAlbum() {
+            album.files = album.files.filter(function(f) {
+                return f !== file;
+            });
+        }
     }
 ]);
