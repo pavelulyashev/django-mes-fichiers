@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from rest_framework import viewsets
 from src.apps.file_uploader.models import MonAlbum, MonFile
 from src.apps.file_uploader.serializers import AlbumSerializer, \
-    FileSerializer, AlbumListSerializer, FileCreationSerializer
+    FileSerializer, AlbumListSerializer, FileCreationSerializer, BaseAlbumSerializer
 
 
 class RootView(TemplateView):
@@ -17,6 +17,11 @@ class AlbumViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         self.serializer_class = AlbumListSerializer
         return super(AlbumViewSet, self).list(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        self.serializer_class = BaseAlbumSerializer
+        return super(AlbumViewSet, self).partial_update(request, *args,
+                                                        **kwargs)
 
 
 class FileViewSet(viewsets.ModelViewSet):

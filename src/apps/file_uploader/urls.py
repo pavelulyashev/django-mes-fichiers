@@ -4,7 +4,6 @@ from src.apps.file_uploader import views
 
 
 class CustomRouter(DefaultRouter):
-    include_root_view = False
 
     def __init__(self):
         super(CustomRouter, self).__init__()
