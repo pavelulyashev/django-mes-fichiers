@@ -5,6 +5,12 @@ from easy_thumbnails.fields import ThumbnailerField
 from easy_thumbnails.alias import aliases
 
 
+class MonFileManager(models.Manager):
+    def get_query_set(self):
+        queryset = super(MonFileManager, self).get_query_set()
+        return queryset.order_by('-created_at')
+
+
 class MonFile(models.Model):
     name = models.CharField(max_length=100, blank=True)
     file = ThumbnailerField(max_length=100, upload_to='monfile/%Y-%m-%d')
@@ -15,6 +21,8 @@ class MonFile(models.Model):
     # automatic fields
     created_at = models.DateTimeField(auto_now_add=True, help_text=u'Created')
     updated_at = models.DateTimeField(auto_now=True, help_text=u'Updated')
+
+    objects = MonFileManager()
 
     class Meta:
         verbose_name_plural = 'Mes Files'
