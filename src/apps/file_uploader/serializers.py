@@ -41,10 +41,12 @@ class FileSerializer(serializers.ModelSerializer):
 
 class FileCreationSerializer(serializers.ModelSerializer):
     file = serializers.FileField()
+    url = FullUrlFileField(source='file', read_only=True)
 
     class Meta:
         model = MonFile
-        fields = ('id', 'file', 'name', 'description', 'created_at')
+        fields = ('id', 'file', 'name', 'description',
+                  'created_at', 'url')
 
 
 class AlbumCoverSerializer(serializers.ModelSerializer):

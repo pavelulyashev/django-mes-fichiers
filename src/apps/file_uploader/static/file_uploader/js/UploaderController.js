@@ -19,7 +19,7 @@ App.factory('MonAlbum', [
 App.factory('MonFile', [
     '$resource',
     function ($resource) {
-        $resource('/file_uploader/rest/files/:id', {
+        return $resource('/file_uploader/rest/files/:id', {
             id: '@id' //this binds the ID of the model to the URL param
         }, {
             query: { method: 'GET', isArray: true },
@@ -43,7 +43,7 @@ App.config([
         var headers = $httpProvider.defaults.headers;
         var token = document.querySelector('input[name=csrfmiddlewaretoken]');
 
-        headers.post['X-CSRFToken'] = headers.put['X-CSRFToken'] = token.value;
+        headers.common['X-CSRFToken'] = token.value;
         $.ajaxSetup({
             headers: { 'X-CSRFToken': token.value }
         });
@@ -129,8 +129,9 @@ App
 
 App
 .controller('AlbumController', [
-    '$scope', '$rootScope', 'albums', 'album',
-    function AlbumController($scope, $rootScope, albums, album) {
+    '$scope', '$rootScope', 'MonAlbum', 'albums', 'album',
+    function AlbumController($scope, $rootScope, MonAlbum, albums, album) {
+
         $scope.saveAlbum = function() {
             if (this.albumForm.$valid) {
                 album.$save(function() {
@@ -139,41 +140,36 @@ App
                 });
             }
         };
+
+        $scope.$on('fileuploaddone', function(e, data) {
+            var file = data.result;
+            var queuedFile = data.files[0];
+            angular.extend(queuedFile, data.result);
+        });
+
         setActiveAlbum(album);
+        $scope.queue = $scope.album.files;
 
         function setActiveAlbum(album) {
-            $scope.album = album;
+            $scope.album = new MonAlbum(album);
             $rootScope.activeAlbum = album.id;
         }
-    }
-])
-.service('retrieveAlbum', [
-    '$q', '$route', 'MonAlbum',
-    function($q, $route, MonAlbum) {
-        var albumId = $route.current.params.albumId;
-        var albumsLoaded = $q.defer();
-        MonAlbum.get({ id: albumId }, function(album) {
-            albumsLoaded.resolve(new MonAlbum(album));
-        });
-        return albumsLoaded.promise;
     }
 ]);
 
 function retrieveAlbum($q, $route, AlbumCache, MonAlbum) {
     var albumId = $route.current.params.albumId;
-    var cachedAlbum = AlbumCache.get(albumId);
 
     function getPromiseForAlbum() {
         var albumLoaded = $q.defer();
         MonAlbum.get({ id: albumId }, function(album) {
-            cachedAlbum = new MonAlbum(album);
-            AlbumCache.put(albumId, cachedAlbum);
-            albumLoaded.resolve(cachedAlbum);
+            AlbumCache.put(albumId, album);
+            albumLoaded.resolve(album);
         });
         return albumLoaded.promise;
     }
 
-    return cachedAlbum || getPromiseForAlbum();
+    return AlbumCache.get(albumId) || getPromiseForAlbum();
 }
 
 App.controller('NewAlbumController', [
@@ -193,8 +189,29 @@ App.controller('NewAlbumController', [
     }
 ]);
 
-App.controller('UploaderController', [
-    '$scope', '$rootScope', 'MonAlbum',
-    function UploaderController($scope, $rootScope, MonAlbum) {
+App.controller('FileController', [
+    '$scope', 'MonFile',
+    function($scope, MonFile) {
+        console.log($scope.$parent.$index);
+        var album = $scope.$parent.$parent.album;
+        var file = $scope.file = new MonFile($scope.$parent.image);
+
+        $scope.saveFile = function() {
+            if (this.fileForm.$valid) {
+                file.$save(function() { });
+            }
+        };
+
+        $scope.removeFile = function() {
+            if (confirm('Are you sure you want to remove this file?')) {
+                $scope.file.$destroy(function() {
+                    // remove file from album files
+                });
+            }
+        };
+
+        $scope.setAsAlbumCover = function() {
+
+        };
     }
 ]);
