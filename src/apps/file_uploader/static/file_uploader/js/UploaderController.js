@@ -30,13 +30,6 @@ App.factory('MonFile', [
     }
 ]);
 
-App.factory('AlbumCache', [
-    '$cacheFactory',
-    function($cacheFactory) {
-        return $cacheFactory('AlbumCache');
-    }
-]);
-
 App.config([
     '$httpProvider',
     function($httpProvider) {
@@ -132,6 +125,7 @@ App
     '$scope', '$rootScope', 'MonAlbum', 'albums', 'album',
     function AlbumController($scope, $rootScope, MonAlbum, albums, album) {
         var album = $scope.album = angular.extend(albums[album.id], album);
+        album._fetched = true;
         $scope.queue = album.files;
         $rootScope.activeAlbum = album.id;
 
@@ -150,31 +144,33 @@ App
             }).$save(updateAlbum);
         };
 
-        $scope.$on('fileuploaddone', function(e, data) {
-            var file = data.result;
-            var queuedFile = data.files[0];
-            angular.extend(queuedFile, data.result);
-        });
-
         function updateAlbum(updatedAlbum) {
             angular.extend(album, updatedAlbum);
         }
     }
 ]);
 
-function retrieveAlbum($q, $route, AlbumCache, MonAlbum) {
-    var albumId = $route.current.params.albumId;
+function retrieveAlbum($rootScope, $q, $route, MonAlbum) {
+    var albumId = Number($route.current.params.albumId);
+
+    function getFromRootScope() {
+        if ($rootScope.albums) {
+            var album = $rootScope.albums[albumId];
+            if (album && album._fetched) {
+                return album;
+            }
+        }
+    }
 
     function getPromiseForAlbum() {
         var albumLoaded = $q.defer();
         MonAlbum.get({ id: albumId }, function(album) {
-            AlbumCache.put(albumId, album);
             albumLoaded.resolve(album);
         });
         return albumLoaded.promise;
     }
 
-    return AlbumCache.get(albumId) || getPromiseForAlbum();
+    return getFromRootScope() || getPromiseForAlbum();
 }
 
 App.controller('NewAlbumController', [
@@ -199,6 +195,12 @@ App.controller('FileController', [
     function($scope, MonFile) {
         var album = $scope.$parent.$parent.album;
         var file = $scope.file = $scope.$parent.file;
+
+        $scope.$on('fileuploaddone', function(e, data) {
+            var file = data.result;
+            var queuedFile = data.files[0];
+            angular.extend(queuedFile, data.result);
+        });
 
         $scope.saveFile = function() {
             if (this.fileForm.$valid) {
