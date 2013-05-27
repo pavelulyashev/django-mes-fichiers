@@ -118,7 +118,7 @@ App
             var albumsObj = $rootScope.albums = {};
             for (var i = 0, len = albums.length; i < len; i++) {
                 var album = albums[i];
-                albumsObj[album.id] = album;
+                albumsObj[album.id] = new MonAlbum(album);
             }
             albumsLoaded.resolve(albumsObj);
         }
@@ -131,12 +131,14 @@ App
 .controller('AlbumController', [
     '$scope', '$rootScope', 'MonAlbum', 'albums', 'album',
     function AlbumController($scope, $rootScope, MonAlbum, albums, album) {
+        var album = $scope.album = angular.extend(albums[album.id], album);
+        $scope.queue = album.files;
+        $rootScope.activeAlbum = album.id;
 
         $scope.saveAlbum = function() {
             if (this.albumForm.$valid) {
-                album.$save(function() {
-                    albums[album.id] = album;
-                    setActiveAlbum(album);
+                album.$save(function(updatedAlbum) {
+                    angular.extend(album, updatedAlbum)
                 });
             }
         };
@@ -146,14 +148,6 @@ App
             var queuedFile = data.files[0];
             angular.extend(queuedFile, data.result);
         });
-
-        setActiveAlbum(album);
-        $scope.queue = $scope.album.files;
-
-        function setActiveAlbum(album) {
-            $scope.album = new MonAlbum(album);
-            $rootScope.activeAlbum = album.id;
-        }
     }
 ]);
 
