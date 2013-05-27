@@ -144,6 +144,12 @@ App
             }).$save(updateAlbum);
         };
 
+        $scope.$on('fileuploaddone', function(e, data) {
+            var file = data.result;
+            var queuedFile = data.files[0];
+            angular.extend(queuedFile, data.result);
+        });
+
         function updateAlbum(updatedAlbum) {
             angular.extend(album, updatedAlbum);
         }
@@ -195,12 +201,6 @@ App.controller('FileController', [
     function($scope, MonFile) {
         var album = $scope.$parent.$parent.album;
         var file = $scope.file = $scope.$parent.file;
-
-        $scope.$on('fileuploaddone', function(e, data) {
-            var file = data.result;
-            var queuedFile = data.files[0];
-            angular.extend(queuedFile, data.result);
-        });
 
         $scope.saveFile = function() {
             if (this.fileForm.$valid) {

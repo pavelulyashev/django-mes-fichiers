@@ -3,7 +3,7 @@
         <ul class="nav nav-tabs nav-stacked">
             <li ng-class="{active: !activeAlbum}"><a ng-href="/file_uploader/">All Albums</a></li>
             <li ng-repeat="album in albums" ng-class="{active: activeAlbum == album.id}">
-                <a ng-href="/file_uploader/album/{{ album.id }}">
+                <a ng-href="/file_uploader/album/{{ album.id }}" class="clearfix">
                     {{ album.name }} <span class="pull-right label">{{ album.files.length }}</span>
                 </a>
             </li>
