@@ -118,7 +118,7 @@ App
             var albumsObj = $rootScope.albums = {};
             for (var i = 0, len = albums.length; i < len; i++) {
                 var album = albums[i];
-                albumsObj[album.id] = new MonAlbum(album);
+                albumsObj[album.id] = album;
             }
             albumsLoaded.resolve(albumsObj);
         }
@@ -136,11 +136,18 @@ App
         $rootScope.activeAlbum = album.id;
 
         $scope.saveAlbum = function() {
-            if (this.albumForm.$valid) {
-                album.$save(function(updatedAlbum) {
-                    angular.extend(album, updatedAlbum)
-                });
-            }
+            new MonAlbum({
+                id: album.id,
+                name: album.name,
+                description: album.description
+            }).$save(updateAlbum);
+        };
+
+        $scope.setCover = function() {
+            new MonAlbum({
+                id: album.id,
+                cover: album.cover.id
+            }).$save(updateAlbum);
         };
 
         $scope.$on('fileuploaddone', function(e, data) {
@@ -148,6 +155,10 @@ App
             var queuedFile = data.files[0];
             angular.extend(queuedFile, data.result);
         });
+
+        function updateAlbum(updatedAlbum) {
+            angular.extend(album, updatedAlbum);
+        }
     }
 ]);
 
@@ -186,13 +197,14 @@ App.controller('NewAlbumController', [
 App.controller('FileController', [
     '$scope', 'MonFile',
     function($scope, MonFile) {
-        console.log($scope.$parent.$index);
         var album = $scope.$parent.$parent.album;
-        var file = $scope.file = new MonFile($scope.$parent.image);
+        var file = $scope.file = $scope.$parent.file;
 
         $scope.saveFile = function() {
             if (this.fileForm.$valid) {
-                file.$save(function() { });
+                new MonFile(file).$save(function (updatedFile) {
+//                    angular.extend(file, updatedFile);
+                });
             }
         };
 
@@ -202,10 +214,6 @@ App.controller('FileController', [
                     // remove file from album files
                 });
             }
-        };
-
-        $scope.setAsAlbumCover = function() {
-
         };
     }
 ]);

@@ -40,6 +40,7 @@
 
         <ul class="images">
             <li ng-repeat="file in album.files" class="image-item"
+                ng-controller="FileController"
                 ng-class="editing && 'editing clearfix'">
                 <a href class="image pull-left" ng-click="file.id && (editing = !editing)" title="Toggle edit form">
                     <img ng-show="file.thumbnail" ng-src="{{ file.thumbnail }}" alt="{{ file.name }}">
@@ -70,7 +71,11 @@
                     <fieldset class="meta">
                         <a class="full-image-link" ng-href="{{ file.url }}" target="_blank">Open full image</a>
                         <div class="controls radio">
-                            <label><input type="radio">Set as album cover</label>
+                            <label>
+                                <input type="radio" ng-change="$parent.setCover()"
+                                       ng-model="$parent.album.cover.id" value="{{ file.id }}">
+                                Set as album cover
+                            </label>
                         </div>
 
                         <ul class="info">
