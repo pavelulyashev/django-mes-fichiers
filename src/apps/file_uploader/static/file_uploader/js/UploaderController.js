@@ -205,8 +205,8 @@ App.controller('NewAlbumController', [
 App.controller('FileController', [
     '$scope', 'MonFile',
     function($scope, MonFile) {
-        var album = $scope.$parent.$parent.album;
-        var file = $scope.file = $scope.$parent.file;
+        var album = $scope.$parent.album;
+        var file = $scope.file = $scope.file;
 
         $scope.saveFile = function() {
             if ($scope.fileForm.$valid) {
@@ -237,3 +237,11 @@ App.controller('FileController', [
         }
     }
 ]);
+
+App.directive('ngMonFile', function() {
+    return {
+        controller: 'FileController',
+        templateUrl: '/file.html',
+        scope: false
+    }
+});
