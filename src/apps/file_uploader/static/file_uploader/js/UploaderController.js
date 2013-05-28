@@ -141,7 +141,7 @@ App
         $scope.setCover = function() {
             new MonAlbum({
                 id: album.id,
-                cover: album.cover.id
+                cover: album.cover && album.cover.id
             }).$save(updateAlbum);
         };
 
@@ -205,14 +205,20 @@ App.controller('FileController', [
         var file = $scope.file = $scope.$parent.file;
 
         $scope.saveFile = function() {
-            if (this.fileForm.$valid) {
-                new MonFile(file).$save();
+            if ($scope.fileForm.$valid) {
+                new MonFile({
+                    id: file.id,
+                    name: file.name,
+                    description: file.description
+                }).$save(function() {
+                    $scope.fileForm.$dirty = true;
+                });
             }
         };
 
         $scope.removeFile = function() {
             if (confirm('Are you sure you want to remove this file?')) {
-                new MonFile($scope.file).$destroy(removeFileFromAlbum);
+                new MonFile({id: file.id}).$destroy(removeFileFromAlbum);
             }
         };
 

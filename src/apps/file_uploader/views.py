@@ -35,7 +35,7 @@ class FileViewSet(viewsets.ModelViewSet):
 
     def pre_save(self, obj):
         super(FileViewSet, self).pre_save(obj)
-        obj.name = obj.file.name
+        obj.name = obj.name or obj.file.name
 
     def post_save(self, obj, created=False):
         super(FileViewSet, self).post_save(obj, created)
