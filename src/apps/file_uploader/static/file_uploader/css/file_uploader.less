@@ -114,12 +114,12 @@ ul, li {
 
 .album-thumbnail {
   @album-th-width: 270px;
-  @album-th-height: 230px;
+  @album-th-height: 200px;
   @album-th-margin: 40px;
 
   display: block;
   float: left;
-  height: @album-th-height;
+  height: @album-th-height + 35px;
   width: @album-th-width;
   overflow: hidden;
   position: relative;
@@ -142,6 +142,7 @@ ul, li {
 
   img {
     width: @album-th-width;
+    height: @album-th-height;
     vertical-align: top;
   }
 
@@ -203,5 +204,11 @@ ul, li {
         font-size: 12px;
       }
     }
+  }
+}
+
+.albums {
+  .album {
+    margin-bottom: 50px;
   }
 }

@@ -55,7 +55,7 @@ _app_label = MonAlbum._meta.app_label
 def populate_aliases():
     THUMBNAIL_ALIASES = {
         _app_label: {
-            'cover_medium': {'size': (270, 230), 'crop': True},
+            'cover_medium': {'size': (270, 200), 'crop': True},
             'cover_small': {'size': (140, 140), 'crop': True},
             'preview': {'size': (158, 140), 'crop': True},
         }
