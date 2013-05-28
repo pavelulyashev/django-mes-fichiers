@@ -5,7 +5,7 @@
                 <div ng-init="editing = false">
                     <a href class="album-thumbnail" ng-href="/file_uploader/album/{{ album.id }}">
                         <div class="album-title pull-left" title="{{ album.name }}">{{ album.name }}</div>
-                        <div class="pull-right label">{{ album.files.length }}</div>
+                        <div class="pull-right label">{{ album.files_count }}</div>
                         <img ng-src="{{ album.cover.thumbnail_medium }}">
                     </a>
                 </div>

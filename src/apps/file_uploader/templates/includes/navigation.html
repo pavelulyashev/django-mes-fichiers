@@ -4,7 +4,7 @@
             <li ng-class="{active: !activeAlbum}"><a ng-href="/file_uploader/">All Albums</a></li>
             <li ng-repeat="album in albums" ng-class="{active: activeAlbum == album.id}">
                 <a ng-href="/file_uploader/album/{{ album.id }}" class="clearfix">
-                    {{ album.name }} <span class="pull-right label">{{ album.files.length }}</span>
+                    {{ album.name }} <span class="pull-right label">{{ album.files_count }}</span>
                 </a>
             </li>
             <li ng-class="{active: activeAlbum == 'new'}"><a ng-href="/file_uploader/album/">Create New Album</a></li>

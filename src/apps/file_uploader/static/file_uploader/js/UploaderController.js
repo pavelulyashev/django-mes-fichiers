@@ -111,6 +111,7 @@ App
             var albumsObj = $rootScope.albums = {};
             for (var i = 0, len = albums.length; i < len; i++) {
                 var album = albums[i];
+                album.files_count = album.files.length;
                 albumsObj[album.id] = album;
             }
             albumsLoaded.resolve(albumsObj);
@@ -148,6 +149,7 @@ App
             var file = data.result;
             var queuedFile = data.files[0];
             angular.extend(queuedFile, data.result);
+            ++album.files_count;
         });
 
         function updateAlbum(updatedAlbum) {
@@ -215,9 +217,13 @@ App.controller('FileController', [
         };
 
         function removeFileFromAlbum() {
-            album.files = album.files.filter(function(f) {
-                return f !== file;
-            });
+            file._deleted = true;
+            --album.files_count;
+
+            if (album.cover && album.cover.id === file.id) {
+                album.cover = null;
+                $scope.$parent.setCover();
+            }
         }
     }
 ]);
