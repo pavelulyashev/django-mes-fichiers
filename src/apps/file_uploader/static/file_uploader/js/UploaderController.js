@@ -37,6 +37,7 @@ App.config([
         var token = document.querySelector('input[name=csrfmiddlewaretoken]');
 
         headers.common['X-CSRFToken'] = token.value;
+        // jQuery-file-upload uses jQuery.ajax
         $.ajaxSetup({
             headers: { 'X-CSRFToken': token.value }
         });
@@ -123,8 +124,8 @@ App
 
 App
 .controller('AlbumController', [
-    '$scope', '$rootScope', 'MonAlbum', 'albums', 'album',
-    function AlbumController($scope, $rootScope, MonAlbum, albums, album) {
+    '$scope', '$rootScope', '$location', 'MonAlbum', 'albums', 'album',
+    function AlbumController($scope, $rootScope, $location, MonAlbum, albums, album) {
         var album = $scope.album = angular.extend(albums[album.id], album);
         album._fetched = true;
         $scope.queue = album.files;
@@ -138,6 +139,15 @@ App
                     description: album.description
                 }).$save(function() {
                     $scope.albumForm.$setPristine();
+                });
+            }
+        };
+
+        $scope.removeAlbum = function() {
+            if (confirm('Are you sure you want to remove this album?')) {
+                new MonAlbum({id: album.id}).$destroy(function() {
+                    delete albums[album.id];
+                    $location.url('/file_uploader/');
                 });
             }
         };
@@ -189,16 +199,21 @@ App.controller('NewAlbumController', [
     '$scope', '$rootScope', '$location', 'MonAlbum',
     function NewAlbumController($scope, $rootScope, $location, MonAlbum) {
         $rootScope.activeAlbum = 'new';
+        $scope.album = {
+            files_count: 0
+        };
 
-        $scope.album = new MonAlbum();
         $scope.saveAlbum = function() {
             if (this.albumForm.$valid) {
-                this.album.$create(function(newAlbum) {
-                    $rootScope.albums[newAlbum.id] = newAlbum;
-                    $location.url('/file_uploader/album/' + newAlbum.id);
-                });
+                new MonAlbum($scope.album).$create(onAlbumCreated);
             }
         };
+
+        function onAlbumCreated(newAlbum) {
+            var newAlbum = angular.extend($scope.album, newAlbum);
+            $rootScope.albums[newAlbum.id] = newAlbum;
+            $location.url('/file_uploader/album/' + newAlbum.id);
+        }
     }
 ]);
 
