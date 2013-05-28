@@ -1,7 +1,7 @@
 {% verbatim %}
     <script type="text/ng-template" id="/file.html">
         <a href class="image pull-left" ng-click="file.id && (editing = !editing)" title="Toggle edit form">
-            <img ng-show="file.thumbnail" ng-src="{{ file.thumbnail }}" alt="{{ file.name }}">
+            <img ng-show="file.thumbnail" ng-src="{{ file.thumbnail }}" alt="{{ file.name_ }}">
             <div ng-hide="file.thumbnail" data-preview="file"></div>
             <div ng-hide="file.id" class="progress progress-warning progress-striped active"
                  data-ng-class="{pending: 'in'}[file.$state()]"
@@ -15,7 +15,7 @@
                   ng-submit="saveFile()" name="fileForm">
                 <fieldset class="text">
                     <div class="controls">
-                        <input type="text" ng-model="file.name" placeholder="Name">
+                        <input type="text" ng-model="file.name_" placeholder="Name">
                     </div>
                     <div class="controls">
                         <textarea ng-model="file.description" placeholder="Description"></textarea>

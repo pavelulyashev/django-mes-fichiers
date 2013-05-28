@@ -206,13 +206,17 @@ App.controller('FileController', [
     '$scope', 'MonFile',
     function($scope, MonFile) {
         var album = $scope.$parent.album;
-        var file = $scope.file = $scope.file;
+        var file = $scope.file;
+
+        // Newly uploaded file is instance of File,
+        // File.name is only getter, so we need model another field
+        file.name_ = file.name;
 
         $scope.saveFile = function() {
             if ($scope.fileForm.$valid) {
                 new MonFile({
                     id: file.id,
-                    name: file.name,
+                    name: file.name_,
                     description: file.description
                 }).$save(function() {
                     $scope.fileForm.$setPristine();
