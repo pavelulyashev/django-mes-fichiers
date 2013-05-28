@@ -131,11 +131,15 @@ App
         $rootScope.activeAlbum = album.id;
 
         $scope.saveAlbum = function() {
-            new MonAlbum({
-                id: album.id,
-                name: album.name,
-                description: album.description
-            }).$save(updateAlbum);
+            if ($scope.albumForm.$valid) {
+                new MonAlbum({
+                    id: album.id,
+                    name: album.name,
+                    description: album.description
+                }).$save(function() {
+                    $scope.albumForm.$setPristine();
+                });
+            }
         };
 
         $scope.setCover = function() {
@@ -211,7 +215,7 @@ App.controller('FileController', [
                     name: file.name,
                     description: file.description
                 }).$save(function() {
-                    $scope.fileForm.$dirty = true;
+                    $scope.fileForm.$setPristine();
                 });
             }
         };

@@ -18,7 +18,7 @@
 
                     <div class="controls clearfix" ng-show="album.id">
                         <a href class="remove-album-with-files btn btn-link pull-left">Remove album</a>
-                        <button type="submit" class="btn btn-link pull-right">Save</button>
+                        <button ng-show="albumForm.$dirty" type="submit" class="btn btn-link pull-right">Save</button>
                     </div>
                     <div class="controls clearfix" ng-hide="album.id">
                         <button type="submit" class="btn btn-link pull-right">Create album</button>
