@@ -4,7 +4,8 @@
             <form class="instance-form album-form span5 clearfix" name="albumForm" ng-submit="saveAlbum()">
                 <fieldset class="cover pull-left">
                     <div class="image">
-                        <img ng-src="{{ album.cover.thumbnail_small }}" alt="{{ album.title }}">
+                        <img ng-show="album.cover" ng-src="{{ album.cover.thumbnail_small }}" alt="{{ album.name }}">
+                        <img ng-hide="album.cover" alt>
                     </div>
                 </fieldset>
 
