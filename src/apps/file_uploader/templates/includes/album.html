@@ -53,21 +53,23 @@
                     </div>
                 </a>
 
-                <form class="instance-form file-form clearfix" method="post"
-                      ng-show="editing" ng-submit="saveFile()" name="fileForm">
-                    <fieldset class="text">
-                        <div class="controls">
-                            <input type="text" ng-model="file.name" placeholder="Name">
-                        </div>
-                        <div class="controls">
-                            <textarea ng-model="file.description" placeholder="Description"></textarea>
-                        </div>
+                <div ng-show="editing">
+                    <form class="instance-form file-form clearfix" method="post"
+                          ng-submit="saveFile()" name="fileForm">
+                        <fieldset class="text">
+                            <div class="controls">
+                                <input type="text" ng-model="file.name" placeholder="Name">
+                            </div>
+                            <div class="controls">
+                                <textarea ng-model="file.description" placeholder="Description"></textarea>
+                            </div>
 
-                        <div class="controls clearfix">
-                            <a href class="btn btn-link pull-left" ng-click="removeFile()">Remove File</a>
-                            <button ng-show="fileForm.$dirty" type="submit" class="btn btn-link pull-right">Save</button>
-                        </div>
-                    </fieldset>
+                            <div class="controls clearfix">
+                                <a href class="btn btn-link pull-left" ng-click="removeFile()">Remove File</a>
+                                <button ng-show="fileForm.$dirty" type="submit" class="btn btn-link pull-right">Save</button>
+                            </div>
+                        </fieldset>
+                    </form>
 
                     <fieldset class="meta">
                         <a class="full-image-link" ng-href="{{ file.url }}" target="_blank">Open full image</a>
@@ -84,7 +86,7 @@
                             <li class="uploaded">Uploaded: {{ file.created_at | date }}</li>
                         </ul>
                     </fieldset>
-                </form>
+                </div>
             </li>
         </ul>
     </script>
