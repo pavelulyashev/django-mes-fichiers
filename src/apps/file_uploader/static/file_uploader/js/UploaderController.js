@@ -223,6 +223,10 @@ App.controller('FileController', [
         var album = $scope.$parent.album;
         var file = $scope.file;
 
+        if (file.error) {
+            file.$deleted = true;
+        }
+
         // Newly uploaded file is instance of File,
         // File.name is only getter, so we need model another field
         file.name_ = file.name;
@@ -246,7 +250,7 @@ App.controller('FileController', [
         };
 
         function removeFileFromAlbum() {
-            file._deleted = true;
+            file.$deleted = true;
             --album.files_count;
 
             if (album.cover && album.cover.id === file.id) {

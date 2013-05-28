@@ -41,7 +41,7 @@
 
         <ul class="images">
             <li ng-repeat="file in album.files" class="image-item"
-                ng-mon-file ng-hide="file._deleted"
+                ng-mon-file ng-hide="file.$deleted"
                 ng-class="editing && 'editing clearfix'">
             </li>
         </ul>
