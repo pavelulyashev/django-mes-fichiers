@@ -6,7 +6,7 @@ import os
 PROJECT_SRC = os.path.dirname(__file__)
 PROJECT_ROOT = os.path.normpath(os.path.join(PROJECT_SRC, '..'))
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -15,17 +15,33 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
+if 'VCAP_SERVICES' in os.environ:
+    import json
+    vcap_services = json.loads(os.environ['VCAP_SERVICES'])
+    # XXX: avoid hardcoding here
+    mysql_srv = vcap_services['mysql-5.1'][0]
+    cred = mysql_srv['credentials']
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': cred['name'],
+            'USER': cred['user'],
+            'PASSWORD': cred['password'],
+            'HOST': cred['hostname'],
+            'PORT': cred['port'],
+            }
+        }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": "dev.db",
+            "USER": "",
+            "PASSWORD": "",
+            "HOST": "",
+            "PORT": "",
+            }
+        }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
