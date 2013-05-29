@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.signals import post_delete
 
 from easy_thumbnails.fields import ThumbnailerField
 from easy_thumbnails.alias import aliases
@@ -49,12 +50,16 @@ class MonAlbum(models.Model):
         return self.name
 
 
-_app_label = MonAlbum._meta.app_label
+def delete_file_and_thumbnails(instance, **kwargs):
+    instance.file.delete()
 
 
-def populate_aliases():
+post_delete.connect(delete_file_and_thumbnails, sender=MonFile)
+
+
+def populate_aliases(app_label):
     THUMBNAIL_ALIASES = {
-        _app_label: {
+        app_label: {
             'cover_medium': {'size': (270, 200), 'crop': True},
             'cover_small': {'size': (140, 140), 'crop': True},
             'preview': {'size': (158, 140), 'crop': True},
@@ -65,5 +70,6 @@ def populate_aliases():
             aliases.set(alias, options, target=target)
 
 
+_app_label = MonAlbum._meta.app_label
 if not aliases.all(target=_app_label):
-    populate_aliases()
+    populate_aliases(_app_label)
