@@ -26,5 +26,6 @@ router.register(r'files', views.FileViewSet)
 
 urlpatterns = patterns('',
     url(r'^rest/', include(router.urls)),
-    url(r'^(?P<path>.*)$', views.RootView.as_view(), name='file_uploader_root'),
+    url(r'^(?P<path>.*)$', views.RootView.as_view()),
+    url(r'^$', views.RootView.as_view(), name='root'),
 )

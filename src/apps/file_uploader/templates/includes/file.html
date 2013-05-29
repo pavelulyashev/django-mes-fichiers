@@ -41,6 +41,7 @@
                 <ul class="info">
                     <li class="size">Size: {{ file.size | formatFileSize }}</li>
                     <li class="uploaded">Uploaded: {{ file.created_at | date }}</li>
+                    <li><a href ng-click="sendToTinyMCE()">Past into editor</a></li>
                 </ul>
             </fieldset>
         </div>

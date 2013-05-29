@@ -1,9 +1,24 @@
+from django import forms
 from django.views.generic import TemplateView
 
 from rest_framework import viewsets
+from tinymce.widgets import TinyMCE
 from src.apps.file_uploader.models import MonAlbum, MonFile
 from src.apps.file_uploader.serializers import AlbumSerializer, \
     FileSerializer, AlbumListSerializer, FileCreationSerializer, BaseAlbumSerializer
+
+
+class TinymceForm(forms.Form):
+    text = forms.CharField(widget=TinyMCE(attrs={'cols': 60, 'rows': 30}))
+
+
+class TinymceView(TemplateView):
+    template_name = 'main.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(TinymceView, self).get_context_data(**kwargs)
+        context['form'] = TinymceForm()
+        return context
 
 
 class RootView(TemplateView):

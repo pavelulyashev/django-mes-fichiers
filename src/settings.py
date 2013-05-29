@@ -133,6 +133,7 @@ INSTALLED_APPS = (
 
     'rest_framework',
     'easy_thumbnails',
+    'tinymce',
 
     'src.apps.file_uploader',
 )

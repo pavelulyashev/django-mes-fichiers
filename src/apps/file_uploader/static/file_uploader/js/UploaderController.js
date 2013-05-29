@@ -249,6 +249,10 @@ App.controller('FileController', [
             }
         };
 
+        $scope.sendToTinyMCE = function() {
+            window.parent.postMessage(file, window.parent.location.href);
+        };
+
         function removeFileFromAlbum() {
             file.$deleted = true;
             --album.files_count;
