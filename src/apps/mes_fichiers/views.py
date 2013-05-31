@@ -3,8 +3,9 @@ from django.views.generic import TemplateView
 
 from rest_framework import viewsets
 from tinymce.widgets import TinyMCE
-from src.apps.file_uploader.models import MonAlbum, MonFile
-from src.apps.file_uploader.serializers import AlbumSerializer, \
+
+from src.apps.mes_fichiers.models import MonAlbum, MonFichier
+from src.apps.mes_fichiers.serializers import AlbumSerializer, \
     FileSerializer, AlbumListSerializer, FileCreationSerializer, BaseAlbumSerializer
 
 
@@ -23,7 +24,7 @@ class TinymceView(TemplateView):
 
 
 class RootView(TemplateView):
-    template_name = 'file_uploader.html'
+    template_name = 'index.html'
 
 
 class AlbumViewSet(viewsets.ModelViewSet):
@@ -41,7 +42,7 @@ class AlbumViewSet(viewsets.ModelViewSet):
 
 
 class FileViewSet(viewsets.ModelViewSet):
-    queryset = MonFile.objects.all()
+    queryset = MonFichier.objects.all()
     serializer_class = FileSerializer
 
     def create(self, request, *args, **kwargs):

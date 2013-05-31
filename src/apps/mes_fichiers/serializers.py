@@ -1,6 +1,6 @@
 from easy_thumbnails.exceptions import InvalidImageFormatError
 from rest_framework import serializers, relations
-from src.apps.file_uploader.models import MonFile, MonAlbum
+from src.apps.mes_fichiers.models import MonFichier, MonAlbum
 
 
 class FullUrlFileField(serializers.FileField):
@@ -34,7 +34,7 @@ class FileSerializer(serializers.ModelSerializer):
     size = FileSizeField(source='file', read_only=True)
 
     class Meta:
-        model = MonFile
+        model = MonFichier
         fields = ('id', 'name', 'description', 'url',
                   'thumbnail', 'size', 'created_at')
 
@@ -44,7 +44,7 @@ class FileCreationSerializer(serializers.ModelSerializer):
     url = FullUrlFileField(source='file', read_only=True)
 
     class Meta:
-        model = MonFile
+        model = MonFichier
         fields = ('id', 'file', 'name', 'description',
                   'created_at', 'url')
 
@@ -58,7 +58,7 @@ class CoverSerializer(serializers.ModelSerializer):
                                           read_only=True)
 
     class Meta:
-        model = MonFile
+        model = MonFichier
         fields = ('id', 'thumbnail_small', 'thumbnail_medium')
 
 

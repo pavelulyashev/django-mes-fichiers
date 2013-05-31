@@ -27,7 +27,7 @@
                 </fieldset>
             </form>
 
-            <form enctype="multipart/form-data" action="/file_uploader/rest/files/" method="post"
+            <form enctype="multipart/form-data" action="/mes_fichiers/rest/files/" method="post"
                   ng-show="album.id" class="drop-files-area span4" data-fileupload="options">
                 <input type="file" name="file" multiple>
                 <input type="hidden" name="album" value="{{ album.id }}">
@@ -41,7 +41,7 @@
 
         <ul class="images">
             <li ng-repeat="file in album.files" class="image-item"
-                ng-mon-file ng-hide="file.$deleted"
+                ng-mon-fichier ng-hide="file.$deleted"
                 ng-class="editing && 'editing clearfix'">
             </li>
         </ul>

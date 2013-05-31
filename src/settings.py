@@ -135,7 +135,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'tinymce',
 
-    'src.apps.file_uploader',
+    'src.apps.mes_fichiers',
 )
 
 # A sample logging configuration. The only tangible logging
