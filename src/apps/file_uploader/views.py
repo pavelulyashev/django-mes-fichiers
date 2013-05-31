@@ -17,7 +17,8 @@ class TinymceView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(TinymceView, self).get_context_data(**kwargs)
-        context['form'] = TinymceForm()
+        context['form'] = form = TinymceForm()
+        print form.media
         return context
 
 

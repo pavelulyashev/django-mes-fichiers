@@ -13,8 +13,6 @@ urlpatterns = patterns('',
     url(r'^$', TinymceView.as_view()),
     url(r'^file_uploader/', include('src.apps.file_uploader.urls',
                                     namespace='uploader')),
-    url(r'^tinymce/', include('tinymce.urls')),
-
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
