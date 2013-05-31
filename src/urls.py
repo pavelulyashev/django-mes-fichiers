@@ -7,7 +7,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^file_uploader/', include('src.apps.file_uploader.urls')),
+    url(r'^mes_fichiers/', include('src.apps.mes_fichiers.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),

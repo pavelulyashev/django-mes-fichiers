@@ -6,15 +6,16 @@ from easy_thumbnails.fields import ThumbnailerField
 from easy_thumbnails.alias import aliases
 
 
-class MonFileManager(models.Manager):
+class MonFichierManager(models.Manager):
+
     def get_query_set(self):
-        queryset = super(MonFileManager, self).get_query_set()
+        queryset = super(MonFichierManager, self).get_query_set()
         return queryset.order_by('-created_at')
 
 
-class MonFile(models.Model):
+class MonFichier(models.Model):
     name = models.CharField(max_length=100, blank=True)
-    file = ThumbnailerField(max_length=100, upload_to='monfile/%Y-%m-%d')
+    file = ThumbnailerField(max_length=100, upload_to='mon-fichier/%Y-%m-%d')
 
     description = models.TextField(blank=True)
     user = models.ForeignKey(User, default=1, related_name='user_files')
@@ -23,10 +24,10 @@ class MonFile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, help_text=u'Created')
     updated_at = models.DateTimeField(auto_now=True, help_text=u'Updated')
 
-    objects = MonFileManager()
+    objects = MonFichierManager()
 
     class Meta:
-        verbose_name_plural = 'Mes Files'
+        verbose_name_plural = 'Mes Fichiers'
 
     def __unicode__(self):
         return self.name
@@ -35,11 +36,11 @@ class MonFile(models.Model):
 class MonAlbum(models.Model):
     name = models.CharField(max_length=250)
     description = models.TextField(blank=True)
-    cover = models.ForeignKey(MonFile,
+    cover = models.ForeignKey(MonFichier,
                               null=True,
                               blank=True,
                               on_delete=models.SET_NULL)
-    files = models.ManyToManyField(MonFile,
+    files = models.ManyToManyField(MonFichier,
                                    related_name='albums',
                                    blank=True)
 
@@ -54,7 +55,7 @@ def delete_file_and_thumbnails(instance, **kwargs):
     instance.file.delete()
 
 
-post_delete.connect(delete_file_and_thumbnails, sender=MonFile)
+post_delete.connect(delete_file_and_thumbnails, sender=MonFichier)
 
 
 def populate_aliases(app_label):

@@ -5,7 +5,7 @@ var App = angular.module('ngUploaderView', ['ngResource', 'blueimp.fileupload'])
 App.factory('MonAlbum', [
     '$resource',
     function ($resource) {
-        return $resource('/file_uploader/rest/albums/:id', {
+        return $resource('/mes_fichiers/rest/albums/:id', {
             id: '@id' //this binds the ID of the model to the URL param
         }, {
             query: { method: 'GET', isArray: true },
@@ -16,10 +16,10 @@ App.factory('MonAlbum', [
     }
 ]);
 
-App.factory('MonFile', [
+App.factory('MonFichier', [
     '$resource',
     function ($resource) {
-        return $resource('/file_uploader/rest/files/:id', {
+        return $resource('/mes_fichiers/rest/files/:id', {
             id: '@id' //this binds the ID of the model to the URL param
         }, {
             query: { method: 'GET', isArray: true },
@@ -62,19 +62,19 @@ App.config([
 App.config([
     '$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
-        $routeProvider.when('/file_uploader/', {
+        $routeProvider.when('/mes_fichiers/', {
             templateUrl: '/albums.html',
             controller: 'AlbumsController',
             resolve: { albums: 'retrieveAlbums' }
         });
 
-        $routeProvider.when('/file_uploader/album/', {
+        $routeProvider.when('/mes_fichiers/album/', {
             templateUrl: '/album.html',
             controller: 'NewAlbumController',
             resolve: { albums: 'retrieveAlbums' }
         });
 
-        $routeProvider.when('/file_uploader/album/:albumId', {
+        $routeProvider.when('/mes_fichiers/album/:albumId', {
             templateUrl: '/album.html',
             controller: 'AlbumController',
             resolve: { albums: 'retrieveAlbums',
@@ -82,7 +82,7 @@ App.config([
         });
 
         $routeProvider.otherwise({
-            redirectTo: '/file_uploader/'
+            redirectTo: '/mes_fichiers/'
         });
 
         $locationProvider.html5Mode(true);
@@ -147,7 +147,7 @@ App
             if (confirm('Are you sure you want to remove this album?')) {
                 new MonAlbum({id: album.id}).$destroy(function() {
                     delete albums[album.id];
-                    $location.url('/file_uploader/');
+                    $location.url('/mes_fichiers/');
                 });
             }
         };
@@ -212,14 +212,14 @@ App.controller('NewAlbumController', [
         function onAlbumCreated(newAlbum) {
             var newAlbum = angular.extend($scope.album, newAlbum);
             $rootScope.albums[newAlbum.id] = newAlbum;
-            $location.url('/file_uploader/album/' + newAlbum.id);
+            $location.url('/mes_fichiers/album/' + newAlbum.id);
         }
     }
 ]);
 
 App.controller('FileController', [
-    '$scope', 'MonFile',
-    function($scope, MonFile) {
+    '$scope', 'MonFichier',
+    function($scope, MonFichier) {
         var album = $scope.$parent.album;
         var file = $scope.file;
 
@@ -233,7 +233,7 @@ App.controller('FileController', [
 
         $scope.saveFile = function() {
             if ($scope.fileForm.$valid) {
-                new MonFile({
+                new MonFichier({
                     id: file.id,
                     name: file.name_,
                     description: file.description
@@ -245,7 +245,7 @@ App.controller('FileController', [
 
         $scope.removeFile = function() {
             if (confirm('Are you sure you want to remove this file?')) {
-                new MonFile({id: file.id}).$destroy(removeFileFromAlbum);
+                new MonFichier({id: file.id}).$destroy(removeFileFromAlbum);
             }
         };
 
@@ -261,7 +261,7 @@ App.controller('FileController', [
     }
 ]);
 
-App.directive('ngMonFile', function() {
+App.directive('ngMonFichier', function() {
     return {
         controller: 'FileController',
         templateUrl: '/file.html',

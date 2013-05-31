@@ -1,13 +1,13 @@
 {% verbatim %}
     <script type="text/ng-template" id="menu.html">
         <ul class="nav nav-tabs nav-stacked">
-            <li ng-class="{active: !activeAlbum}"><a ng-href="/file_uploader/">All Albums</a></li>
+            <li ng-class="{active: !activeAlbum}"><a ng-href="/mes_fichiers/">All Albums</a></li>
             <li ng-repeat="album in albums" ng-class="{active: activeAlbum == album.id}">
-                <a ng-href="/file_uploader/album/{{ album.id }}" class="clearfix">
+                <a ng-href="/mes_fichiers/album/{{ album.id }}" class="clearfix">
                     {{ album.name }} <span class="pull-right label">{{ album.files_count }}</span>
                 </a>
             </li>
-            <li ng-class="{active: activeAlbum == 'new'}"><a ng-href="/file_uploader/album/">Create New Album</a></li>
+            <li ng-class="{active: activeAlbum == 'new'}"><a ng-href="/mes_fichiers/album/">Create New Album</a></li>
         </ul>
     </script>
 {% endverbatim %}
