@@ -6,7 +6,7 @@ from src.apps.mes_fichiers.serializers import AlbumSerializer, \
     FileSerializer, AlbumListSerializer, FileCreationSerializer, BaseAlbumSerializer
 
 
-class RootView(TemplateView):
+class IndexView(TemplateView):
     template_name = 'index.html'
 
 
