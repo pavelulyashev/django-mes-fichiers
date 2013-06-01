@@ -23,7 +23,7 @@ class TinymceView(TemplateView):
         return context
 
 
-class RootView(TemplateView):
+class IndexView(TemplateView):
     template_name = 'index.html'
 
 
