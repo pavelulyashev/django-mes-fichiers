@@ -10,7 +10,7 @@ from src.apps.mes_fichiers.serializers import AlbumSerializer, \
 
 
 class TinymceForm(forms.Form):
-    text = forms.CharField(widget=TinyMCE(attrs={'cols': 60, 'rows': 30}))
+    text = forms.CharField(widget=TinyMCE(attrs={'rows': 30}))
 
 
 class TinymceView(TemplateView):
@@ -18,8 +18,7 @@ class TinymceView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(TinymceView, self).get_context_data(**kwargs)
-        context['form'] = form = TinymceForm()
-        print form.media
+        context['form'] = TinymceForm()
         return context
 
 

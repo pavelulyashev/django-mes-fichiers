@@ -249,7 +249,7 @@ App.controller('FileController', [
             }
         };
 
-        $scope.sendToTinyMCE = function() {
+        $scope.sendToEditor = function() {
             window.parent.postMessage(file, window.parent.location.href);
         };
 

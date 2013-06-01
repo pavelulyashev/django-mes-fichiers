@@ -2,25 +2,9 @@
 <html>
 <head>
     <title>Test uploader in tynimce</title>
-    <style type="text/css">
-        iframe, .form {
-            float: left;
-        }
-    </style>
     {{ form.media }}
 </head>
 <body>
-    <iframe src="{% url "mes_fichiers:index" %}" width="600" height="600"></iframe>
     <div class="form"> {{ form }} </div>
-
-    <script type="text/javascript">
-        window.addEventListener('message', function(e) {
-            var img = '<img src="__src__" id="monfile-__id__">';
-            console.log(e);
-            var img = img.replace('__src__', e.data.url)
-                         .replace('__id__', e.data.id);
-            tinymce.activeEditor.execCommand('mceInsertContent', false, img);
-        });
-    </script>
 </body>
 </html>

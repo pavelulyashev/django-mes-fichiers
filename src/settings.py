@@ -173,11 +173,16 @@ TINYMCE_DEFAULT_CONFIG = {
         'searchreplace visualblocks code fullscreen',
         'insertdatetime media table contextmenu paste',
     ],
+    'external_plugins': {
+        'mes_fichiers': os.path.join(STATIC_URL,
+                                     'mes_fichiers/js/tinymce-mes-fichiers.js')
+    },
     'skin': 'lightgray',
     'image_advtab': True,
     'toolbar': ('preview | insertfile undo redo | bold italic | '
                 'alignleft aligncenter alignright alignjustify | '
-                'bullist numlist outdent indent | link image')
+                'bullist numlist outdent indent | link image'),
+    'file_browser_callback': 'openMesFichiersManager',
 }
 
 try:
