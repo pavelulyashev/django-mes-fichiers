@@ -26,6 +26,6 @@ router.register(r'files', views.FileViewSet)
 
 urlpatterns = patterns('',
     url(r'^rest/', include(router.urls)),
-    url(r'^$', views.RootView.as_view(), name='root'),
-    url(r'^(?P<path>.*)$', views.RootView.as_view()),
+    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^(?P<path>.*)$', views.IndexView.as_view()),
 )
