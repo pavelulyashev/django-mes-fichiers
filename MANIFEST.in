@@ -1,2 +1,4 @@
 include AUTHORS README.md LICENSE
-recursive-include mes_fichiers *
+recursive-include mes_fichiers *.py
+recursive-include mes_fichiers/static *
+recursive-include mes_fichiers/templates *
