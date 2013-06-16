@@ -1,5 +1,5 @@
 from django.contrib import admin
-from src.apps.mes_fichiers.models import MonFichier, MonAlbum
+from mes_fichiers.models import MonFichier, MonAlbum
 
 
 class MonFichierAdmin(admin.ModelAdmin):

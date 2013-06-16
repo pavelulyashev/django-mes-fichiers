@@ -1,6 +1,6 @@
 from easy_thumbnails.exceptions import InvalidImageFormatError
 from rest_framework import serializers, relations
-from src.apps.mes_fichiers.models import MonFichier, MonAlbum
+from mes_fichiers.models import MonFichier, MonAlbum
 
 
 class FullUrlFileField(serializers.FileField):

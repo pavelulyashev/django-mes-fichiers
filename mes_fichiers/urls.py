@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url, include
 from rest_framework.routers import DefaultRouter
-from src.apps.mes_fichiers import views
+from mes_fichiers import views
 
 
 class CustomRouter(DefaultRouter):
