@@ -1,0 +1,2 @@
+include AUTHORS README.md LICENCE
+recursive-include mes_fichiers *
