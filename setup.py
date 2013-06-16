@@ -10,7 +10,7 @@ setup(
     license='BSD',
     packages=find_packages(),
     include_package_data=True,
-    package_data={'mes_fichiers': ['mes_fichiers/static/**/*']},
+    package_data={'': ['mes_fichiers/static/**/*']},
     url='https://github.com/pavelulyashev/django-mes-fichiers',
     description='Manager for files and albums with tinymce integration',
     long_description=open('README.md').read(),
