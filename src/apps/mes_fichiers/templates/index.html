@@ -24,12 +24,9 @@
       <script type="text/javascript" src="{% static "mes_fichiers/js/mes-fichiers.all.min.js" %}"></script>
       <script type="text/javascript">
         (function() {
-          var csrf = $('input[name=csrfmiddlewaretoken]').val();
+          var token = $('input[name=csrfmiddlewaretoken]').val();
           angular.module('mesFichiers').appConfig = {
-            csrf: {
-              header: 'X-CSRFToken',
-              token: csrf
-            },
+            csrf: { 'X-CSRFToken': token },
             baseUrl: '{% url "mes_fichiers:index" %}',
             albumsUrl: '{% url "mes_fichiers:monalbum-list" %}',
             filesUrl: '{% url "mes_fichiers:monfichier-list" %}'

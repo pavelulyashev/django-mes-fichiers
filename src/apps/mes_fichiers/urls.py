@@ -8,7 +8,7 @@ class CustomRouter(DefaultRouter):
     def __init__(self):
         super(CustomRouter, self).__init__()
         routes = self.routes
-        routes[0] = routes[0]._replace(url=r'^{prefix}$')
+        routes[0] = routes[0]._replace(url=r'^{prefix}/?$')
         routes[1] = routes[1]._replace(
             url=r'^{prefix}/{lookup}/?$',
             mapping={
