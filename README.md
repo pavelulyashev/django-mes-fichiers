@@ -1,2 +1,2 @@
-django-file-uploader
+django-mes-fichiers
 ====================

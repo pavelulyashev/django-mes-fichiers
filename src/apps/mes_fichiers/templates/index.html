@@ -1,48 +1,38 @@
 {% load static %}
 
 <html>
-<head>
-    <link rel="stylesheet" href="{% static "mes_fichiers/css/bootstrap.min.css" %}"/>
-    <link rel="stylesheet/less" href="{% static "mes_fichiers/css/mes_fichiers.less" %}"/>
-    <script type="text/javascript" src="{% static "mes_fichiers/js/libs/less-1.3.3.min.js" %}"></script>
-</head>
+  <head>
+    <title>Mes Fichiers</title>
+    <link rel="stylesheet" href="{% static "mes_fichiers/css/mes-fichiers.all.min.css" %}"/>
+  </head>
 
-<body ng-app="ngUploaderView">
+  <body ng-app="mesFichiers">
     <header>&nbsp;</header>
     <div class="container">
-        <div class="uploader-app">
-            {% csrf_token %}
+      <div class="uploader-app">
+        {% csrf_token %}
 
-            <div class="row">
-                <div class="span3 sidebar" ng-include src="'menu.html'"></div>
-                <div class="span9 content" ng-view></div>
-            </div>
+        <div class="row">
+          <div class="span3 sidebar" ng-include src="'nav.html'"></div>
+          <div class="span9 content" ng-view></div>
         </div>
+      </div>
     </div>
     <footer></footer>
 
     {% block scripts %}
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/jquery-1.9.1.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.ui.widget.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/load-image.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/canvas-to-blob.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.iframe-transport.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.fileupload.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.fileupload-process.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.fileupload-resize.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.fileupload-validate.js" %}"></script>
+      <script type="text/javascript" src="{% static "mes_fichiers/js/mes-fichiers.all.min.js" %}"></script>
+      <script type="text/javascript">
+        (function() {
+          var token = $('input[name=csrfmiddlewaretoken]').val();
+          angular.module('mesFichiers').appConfig = {
+            csrf: { 'X-CSRFToken': token },
+            baseUrl: '{% url "mes_fichiers:index" %}',
+            albumsUrl: '{% url "mes_fichiers:monalbum-list" %}',
+            filesUrl: '{% url "mes_fichiers:monfichier-list" %}'
+          };
+        })();
+      </script>
     {% endblock %}
-
-    {% block angular %}
-        {% include "includes/albums.html" %}
-        {% include "includes/album.html" %}
-        {% include "includes/file.html" %}
-        {% include "includes/navigation.html" %}
-
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/angular-1.1.4.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/angular-resource.min.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/libs/fileupload/jquery.fileupload-angular.js" %}"></script>
-        <script type="text/javascript" src="{% static "mes_fichiers/js/MesFichiersApp.js" %}"></script>
-    {% endblock %}
-</body>
+  </body>
 </html>
