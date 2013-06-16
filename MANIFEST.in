@@ -1,3 +1,2 @@
 include AUTHORS README.md LICENSE
-exclude *.pyc
 recursive-include mes_fichiers *
