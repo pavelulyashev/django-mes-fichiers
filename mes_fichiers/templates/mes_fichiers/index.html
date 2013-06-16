@@ -29,7 +29,8 @@
             csrf: { 'X-CSRFToken': token },
             baseUrl: '{% url "mes_fichiers:index" %}',
             albumsUrl: '{% url "mes_fichiers:monalbum-list" %}',
-            filesUrl: '{% url "mes_fichiers:monfichier-list" %}'
+            filesUrl: '{% url "mes_fichiers:monfichier-list" %}',
+            tinymce: true
           };
         })();
       </script>
