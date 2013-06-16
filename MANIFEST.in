@@ -1,2 +1,3 @@
 include AUTHORS README.md LICENSE
 include mes_fichiers/*
+include mes_fichiers/static/*
