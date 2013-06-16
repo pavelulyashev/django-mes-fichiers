@@ -36,6 +36,3 @@ nosetests.xml
 
 *local.py
 .idea
-media/
-static/
-!src/apps/*/static/
