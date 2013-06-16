@@ -1,2 +1,2 @@
 include AUTHORS README.md LICENSE
-graft mes_fichiers
+recursive-include mes_fichiers *
