@@ -14,7 +14,7 @@ class TinymceForm(forms.Form):
 
 
 class TinymceView(TemplateView):
-    template_name = 'main.html'
+    template_name = 'mes_fichiers/test.html'
 
     def get_context_data(self, **kwargs):
         context = super(TinymceView, self).get_context_data(**kwargs)
@@ -23,7 +23,7 @@ class TinymceView(TemplateView):
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
+    template_name = 'mes_fichiers/index.html'
 
 
 class AlbumViewSet(viewsets.ModelViewSet):
