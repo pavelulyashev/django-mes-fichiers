@@ -1,2 +1,2 @@
-include AUTHORS README.md LICENCE
+include AUTHORS README.md LICENSE
 recursive-include mes_fichiers *
