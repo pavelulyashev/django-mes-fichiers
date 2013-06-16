@@ -1,0 +1,6 @@
+include AUTHORS README.md LICENSE
+recursive-include mes_fichiers *.py
+recursive-include mes_fichiers *.html
+recursive-include mes_fichiers *.js
+recursive-include mes_fichiers *.css
+recursive-include mes_fichiers *.png
