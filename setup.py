@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='django-mes-fichiers',
-    version='0.1.0',
+    version='0.1.1',
     author='Pavel Ulyashev',
     author_email='p.ulyashev@gmail.com',
     license='BSD',
