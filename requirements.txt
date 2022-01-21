@@ -4,6 +4,6 @@ Pillow==2.0.0
 argparse==1.2.1
 djangorestframework==2.3.2
 easy-thumbnails==1.2
-ipython==0.13.2
+ipython==7.16.3
 wsgiref==0.1.2
 git+git://github.com/pavelulyashev/django-tinymce.git
